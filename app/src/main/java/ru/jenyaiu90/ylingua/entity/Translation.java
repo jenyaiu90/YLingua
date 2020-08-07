@@ -5,6 +5,8 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
+import java.util.Locale;
+
 import static androidx.room.ForeignKey.CASCADE;
 
 @Entity(tableName = "translations",
@@ -61,7 +63,6 @@ public class Translation
 	@NonNull
 	public String toString()
 	{
-		//Todo: Return words, not their id`s
-		return String.format("[%s] %s : %s [%s]", word1, word1, word2, word2);
+		return String.format(Locale.getDefault(), "%d : %d", word1, word2);
 	}
 }
