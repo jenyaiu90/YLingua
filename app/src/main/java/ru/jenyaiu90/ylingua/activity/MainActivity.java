@@ -32,6 +32,8 @@ public class MainActivity extends AppCompatActivity
 
 	private String lang1, lang2;
 
+	private boolean editingLang;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -46,12 +48,19 @@ public class MainActivity extends AppCompatActivity
 		dictionaryRB = findViewById(R.id.dictionaryRB);
 		fragmentFL = findViewById(R.id.fragmentFL);
 
+		editingLang = false;
+
 		editLangBT.setOnClickListener(new View.OnClickListener()
 		{
 			@Override
 			public void onClick(View v)
 			{
-				//TODO: Edit languages
+				lang1SP.setEnabled(editingLang);
+				lang2SP.setEnabled(editingLang);
+				trainingRB.setEnabled(editingLang);
+				dictionaryRB.setEnabled(editingLang);
+				editLangBT.setText(editingLang ? R.string.edit_lang : R.string.back);
+				editingLang = !editingLang;
 			}
 		});
 		loadLang();

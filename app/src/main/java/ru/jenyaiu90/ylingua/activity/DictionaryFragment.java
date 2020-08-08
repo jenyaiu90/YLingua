@@ -9,7 +9,6 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -19,7 +18,6 @@ import java.util.List;
 import ru.jenyaiu90.ylingua.R;
 import ru.jenyaiu90.ylingua.adapter.DictionaryAdapter;
 import ru.jenyaiu90.ylingua.database.Database;
-import ru.jenyaiu90.ylingua.database.Translations;
 import ru.jenyaiu90.ylingua.entity.Translation;
 
 public class DictionaryFragment extends Fragment
@@ -43,7 +41,7 @@ public class DictionaryFragment extends Fragment
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState)
 	{
-		final View view = inflater.inflate(R.layout.fragment_dictionary, container, false);
+		final View view = inflater.inflate(R.layout.fragment_list, container, false);
 
 		dictionaryPB = view.findViewById(R.id.dictionaryPB);
 
@@ -55,6 +53,7 @@ public class DictionaryFragment extends Fragment
 				//TODO: Add word
 			}
 		});
+		((Button)view.findViewById(R.id.addBT)).setText(R.string.add_word);
 
 		dictionaryPB.setVisibility(View.VISIBLE);
 
