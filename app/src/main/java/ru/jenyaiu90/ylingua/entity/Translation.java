@@ -21,12 +21,14 @@ public class Translation
 	@PrimaryKey
 	private int id;
 	private int word1, word2;
+	private boolean isLearned;
 
-	public Translation(int id, int word1, int word2)
+	public Translation(int id, int word1, int word2, boolean isLearned)
 	{
 		this.id = id;
 		this.word1 = word1;
 		this.word2 = word2;
+		this.isLearned = isLearned;
 	}
 
 	public int getId()
@@ -57,6 +59,16 @@ public class Translation
 	public void setWord2(int word2)
 	{
 		this.word2 = word2;
+	}
+
+	public boolean isLearned()
+	{
+		return isLearned;
+	}
+
+	public void setLearned(boolean learned)
+	{
+		isLearned = learned;
 	}
 
 	@Override

@@ -2,7 +2,10 @@
 	<string name="app_name">YLingua</string>
 	
 	<string name="edit_lang">Edit languages</string>
-	<string name="start">Start</string>
+	<string name="start">Start training</string>
+	<string name="training">Training</string>
+	<string name="dictionary">Dictionary</string>
+	<string name="add_word">Add word</string>
 	
 	<string name="chose_lang">You should chose two different languages.</string>
 	

@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -23,11 +24,10 @@ import ru.jenyaiu90.ylingua.entity.Language;
 
 public class MainActivity extends AppCompatActivity
 {
-	private Database database;
-
 	private Button editLangBT;
 	private ProgressBar langPB;
 	private Spinner lang1SP, lang2SP;
+	private RadioButton trainingRB, dictionaryRB;
 	private FrameLayout fragmentFL;
 
 	private String lang1, lang2;
@@ -38,12 +38,12 @@ public class MainActivity extends AppCompatActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		database = Database.get(MainActivity.this);
-
 		editLangBT = findViewById(R.id.editLangBT);
 		langPB = findViewById(R.id.langPB);
 		lang1SP = findViewById(R.id.lang1SP);
 		lang2SP = findViewById(R.id.lang2SP);
+		trainingRB = findViewById(R.id.trainingRB);
+		dictionaryRB = findViewById(R.id.dictionaryRB);
 		fragmentFL = findViewById(R.id.fragmentFL);
 
 		editLangBT.setOnClickListener(new View.OnClickListener()
@@ -54,9 +54,8 @@ public class MainActivity extends AppCompatActivity
 				//TODO: Edit languages
 			}
 		});
-		loadStartFragment();
 		loadLang();
-		AdapterView.OnItemSelectedListener listener = new AdapterView.OnItemSelectedListener()
+		AdapterView.OnItemSelectedListener spinnerLstn = new AdapterView.OnItemSelectedListener()
 		{
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
@@ -69,7 +68,15 @@ public class MainActivity extends AppCompatActivity
 				{
 					lang2 = (String)parent.getItemAtPosition(position);
 				}
-				loadStartFragment();
+
+				if (trainingRB.isChecked())
+				{
+					loadFragment(new StartFragment(MainActivity.this), false);
+				}
+				else
+				{
+					openDictionary();
+				}
 			}
 
 			@Override
@@ -78,15 +85,34 @@ public class MainActivity extends AppCompatActivity
 
 			}
 		};
-		lang1SP.setOnItemSelectedListener(listener);
-		lang2SP.setOnItemSelectedListener(listener);
+		lang1SP.setOnItemSelectedListener(spinnerLstn);
+		lang2SP.setOnItemSelectedListener(spinnerLstn);
+		trainingRB.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				loadFragment(new StartFragment(MainActivity.this), false);
+			}
+		});
+		dictionaryRB.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				openDictionary();
+			}
+		});
 	}
 
-	private void loadStartFragment()
+	private void loadFragment(Fragment fragment, boolean addToStack)
 	{
-		Toast.makeText(MainActivity.this, lang1 + lang2, Toast.LENGTH_LONG).show();
 		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-		transaction.replace(R.id.fragmentFL, new StartFragment(MainActivity.this));
+		transaction.replace(R.id.fragmentFL, fragment);
+		if (addToStack)
+		{
+			transaction.addToBackStack(null);
+		}
 		transaction.commit();
 	}
 
@@ -98,7 +124,7 @@ public class MainActivity extends AppCompatActivity
 			@Override
 			public void run()
 			{
-				List<Language> languages = database.languages().getAll();
+				List<Language> languages = Database.get(MainActivity.this).languages().getAll();
 				String[] langs = new String[languages.size() + 2];
 				for (int i = 0; i < languages.size(); i++)
 				{
@@ -112,16 +138,8 @@ public class MainActivity extends AppCompatActivity
 				adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 				lang1SP.setAdapter(adapter);
 				lang2SP.setAdapter(adapter);
-				if (languages.isEmpty())
-				{
-					lang1 = null;
-					lang2 = null;
-				}
-				else
-				{
-					lang1 = langs[0];
-					lang2 = langs[0];
-				}
+				lang1 = null;
+				lang2 = null;
 				langPB.setVisibility(View.INVISIBLE);
 			}
 		}.start();
@@ -137,6 +155,20 @@ public class MainActivity extends AppCompatActivity
 		{
 			//TODO: Start
 			Toast.makeText(MainActivity.this, "Starting will be here...", Toast.LENGTH_LONG).show();
+		}
+	}
+
+	private void openDictionary()
+	{
+		if (lang1 == null || lang2 == null || lang1.equals(lang2))
+		{
+			Toast.makeText(MainActivity.this, R.string.chose_lang, Toast.LENGTH_LONG).show();
+			trainingRB.setChecked(true);
+			loadFragment(new StartFragment(MainActivity.this), false);
+		}
+		else
+		{
+			loadFragment(new DictionaryFragment(lang1, lang2), false);
 		}
 	}
 }

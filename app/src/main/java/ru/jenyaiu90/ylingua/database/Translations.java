@@ -18,11 +18,12 @@ public interface Translations
 	@Query("SELECT * FROM translations WHERE id = :id")
 	Translation getById(int id);
 
-	@Query("SELECT * FROM translations WHERE" +
-			"(word1 IN (SELECT word FROM words WHERE language = :language1) AND " +
-			"word2 IN (SELECT word FROM words WHERE language = :language2)) OR " +
-			"(word1 IN (SELECT word FROM words WHERE language = :language2) AND " +
-			"word2 IN (SELECT word FROM words WHERE language = :language1))")
+	@Query("SELECT * FROM translations " +
+			"LEFT JOIN words AS words1 ON words1.id = word1 " +
+			"LEFT JOIN words AS words2 ON words2.id = word2 " +
+			"WHERE words1.language = :language1 AND words2.language = :language2 " +
+			"OR words1.language = :language2 AND words2.language = :language1 " +
+			"ORDER BY words1.word, words2.word")
 	List<Translation> getForLang(@NonNull String language1, @NonNull String language2);
 
 	@Insert
