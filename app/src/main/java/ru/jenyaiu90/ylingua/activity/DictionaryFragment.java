@@ -24,7 +24,7 @@ public class DictionaryFragment extends Fragment
 {
 	private Pair<String, String> lang;
 
-	private ProgressBar dictionaryPB;
+	private ProgressBar loadingPB;
 
 	public DictionaryFragment(@NonNull String lang1, @NonNull String lang2)
 	{
@@ -43,7 +43,7 @@ public class DictionaryFragment extends Fragment
 	{
 		final View view = inflater.inflate(R.layout.fragment_list, container, false);
 
-		dictionaryPB = view.findViewById(R.id.dictionaryPB);
+		loadingPB = view.findViewById(R.id.loadingPB);
 
 		view.findViewById(R.id.addBT).setOnClickListener(new View.OnClickListener()
 		{
@@ -55,7 +55,7 @@ public class DictionaryFragment extends Fragment
 		});
 		((Button)view.findViewById(R.id.addBT)).setText(R.string.add_word);
 
-		dictionaryPB.setVisibility(View.VISIBLE);
+		loadingPB.setVisibility(View.VISIBLE);
 
 		new Thread()
 		{
@@ -67,8 +67,8 @@ public class DictionaryFragment extends Fragment
 				Translation[] array = new Translation[list.size()];
 				list.toArray(array);
 				DictionaryAdapter adapter = new DictionaryAdapter(getContext(), array);
-				((ListView)view.findViewById(R.id.dictionaryLV)).setAdapter(adapter);
-				dictionaryPB.setVisibility(View.INVISIBLE);
+				((ListView)view.findViewById(R.id.listLV)).setAdapter(adapter);
+				loadingPB.setVisibility(View.INVISIBLE);
 			}
 		}.start();
 

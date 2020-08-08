@@ -16,7 +16,7 @@ public interface Languages
 	@Query("SELECT * FROM languages WHERE code = :code")
 	Language get(String code);
 
-	@Query("SELECT * FROM languages")
+	@Query("SELECT * FROM languages ORDER BY code")
 	List<Language> getAll();
 
 	@Insert
