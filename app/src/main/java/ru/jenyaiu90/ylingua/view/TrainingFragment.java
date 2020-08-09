@@ -40,6 +40,7 @@ public class TrainingFragment extends Fragment
 	private EditText translationET;
 	private Button okBT;
 	private CheckBox learnedCB;
+	private TextView rightTV;
 
 	private String word;
 	private LinkedList<String> translations;
@@ -69,6 +70,7 @@ public class TrainingFragment extends Fragment
 		translationET = view.findViewById(R.id.translationET);
 		okBT = view.findViewById(R.id.okBT);
 		learnedCB = view.findViewById(R.id.learnedCB);
+		rightTV = view.findViewById(R.id.rightTV);
 
 		loadQuestion();
 
@@ -162,7 +164,9 @@ public class TrainingFragment extends Fragment
 								{
 									trainingCL.setBackground(getResources()
 											.getDrawable(R.drawable.false_card));
+									rightTV.setText(makeRight(translations));
 								}
+								translationET.setEnabled(false);
 								okBT.setText(R.string.next);
 								okBT.setOnClickListener(new View.OnClickListener()
 								{
@@ -179,5 +183,19 @@ public class TrainingFragment extends Fragment
 				});
 			}
 		}.start();
+	}
+
+	public static String makeRight(List<String> right)
+	{
+		if (right.isEmpty())
+		{
+			return null;
+		}
+		String ret = right.get(0);
+		for (int i = 1; i < right.size(); i++)
+		{
+			ret += "; " + right.get(i);
+		}
+		return ret;
 	}
 }
