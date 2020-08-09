@@ -1,0 +1,80 @@
+package ru.jenyaiu90.ylingua.entity;
+
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.PrimaryKey;
+
+import java.util.Locale;
+
+import static androidx.room.ForeignKey.CASCADE;
+
+@Entity(tableName = "translations",
+		foreignKeys = {
+			@ForeignKey(entity = Word.class, parentColumns = "id", childColumns = "word1",
+						onDelete = CASCADE, onUpdate = CASCADE),
+			@ForeignKey(entity = Word.class, parentColumns = "id", childColumns = "word2",
+						onDelete = CASCADE, onUpdate = CASCADE)
+		})
+public class Translation
+{
+	@PrimaryKey
+	private int id;
+	private int word1, word2;
+	private boolean learned;
+
+	public Translation(int id, int word1, int word2, boolean learned)
+	{
+		this.id = id;
+		this.word1 = word1;
+		this.word2 = word2;
+		this.learned = learned;
+	}
+
+	public int getId()
+	{
+		return id;
+	}
+
+	public void setId(int id)
+	{
+		this.id = id;
+	}
+
+	public int getWord1()
+	{
+		return word1;
+	}
+
+	public void setWord1(int word1)
+	{
+		this.word1 = word1;
+	}
+
+	public int getWord2()
+	{
+		return word2;
+	}
+
+	public void setWord2(int word2)
+	{
+		this.word2 = word2;
+	}
+
+	public boolean getLearned()
+	{
+		return learned;
+	}
+
+	public void setLearned(boolean learned)
+	{
+		this.learned = learned;
+	}
+
+	@Override
+	@NonNull
+	public String toString()
+	{
+		return String.format(Locale.getDefault(), "%d : %d", word1, word2);
+	}
+}

@@ -1,0 +1,36 @@
+<resources>
+	<string name="app_name">YLingua</string>
+	
+	<string name="yes">Yes</string>
+	<string name="no">No</string>
+	<string name="back">Back</string>
+	<string name="delete">Delete</string>
+	<string name="add">Add</string>
+	<string name="save">Save</string>
+	<string name="cancel">Cancel</string>
+	
+	<string name="edit_lang">Edit languages</string>
+	<string name="start">Start training</string>
+	<string name="training">Training</string>
+	<string name="dictionary">Dictionary</string>
+	<string name="add_word">Add word</string>
+	<string name="add_lang">Add language</string>
+	<string name="edit_translation">Edit translation</string>
+	<string name="answer">Answer</string>
+	<string name="next">Next</string>
+	<string name="set_learned">Set as learned</string>
+	
+	<string name="lang_code">EN</string>
+	<string name="lang_name">English</string>
+	<string name="first_word">The word</string>
+	<string name="second_word">The translation</string>
+	<string name="translate">Translate</string>
+	
+	<string name="chose_lang">You should chose two different languages.</string>
+	<string name="enter_words">You should set a word and its translation.</string>
+	<string name="lang_delete_sure">Are you sure you want to delete this language? This will also delete all words in this language thom the dictionary.</string>
+	<string name="translation_delete_sure">Are you sure you want to delete this?</string>
+	<string name="land_not_added">A language wasn`t added.</string>
+	<string name="no_words">There are no words to training. Go to dictionary and add them.</string>
+	<string name="error">Error.</string>
+</resources>
