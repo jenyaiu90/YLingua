@@ -101,7 +101,7 @@ public class DictionaryAdapter extends ArrayAdapter<Translation>
 	private void switchLearned(final View v)
 	{
 		fragment.loadingPB.setVisibility(View.VISIBLE);
-		Thread thread = new Thread()
+		new Thread()
 		{
 			@Override
 			public void run()
@@ -118,18 +118,16 @@ public class DictionaryAdapter extends ArrayAdapter<Translation>
 				{
 					array[i].setLearned(!array[i].getLearned());
 					Database.get(getContext()).translations().update(array[i]);
+					fragment.getActivity().runOnUiThread(new Runnable()
+					{
+						@Override
+						public void run()
+						{
+							fragment.loadWords();
+						}
+					});
 				}
 			}
-		};
-		thread.start();
-		try
-		{
-			thread.join();
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-		fragment.loadWords();
+		}.start();
 	}
 }

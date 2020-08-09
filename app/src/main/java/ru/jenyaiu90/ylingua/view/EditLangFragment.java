@@ -29,17 +29,14 @@ public class EditLangFragment extends Fragment
 {
 	private ProgressBar loadingBP;
 	private View view;
-	private ListAdapter listAdapter;
 
 	private MainActivity activity;
 	private boolean isLangLoaded;
-	private boolean dbError;
 
 	public EditLangFragment(MainActivity activity)
 	{
 		this.activity = activity;
 		isLangLoaded = false;
-		dbError = false;
 	}
 
 	@Override
@@ -98,7 +95,8 @@ public class EditLangFragment extends Fragment
 
 	private void addLanguage(@NonNull final String code, @NonNull final String name)
 	{
-		Thread thread = new Thread()
+		loadingBP.setVisibility(View.VISIBLE);
+		new Thread()
 		{
 			@Override
 			public void run()
@@ -109,32 +107,27 @@ public class EditLangFragment extends Fragment
 				}
 				catch (SQLiteConstraintException e)
 				{
-					dbError = true;
+					getActivity().runOnUiThread(new Runnable()
+					{
+						@Override
+						public void run()
+						{
+							Toast.makeText(getContext(), R.string.land_not_added, Toast.LENGTH_LONG).show();
+						}
+					});
+				}
+				finally
+				{
+					loadingBP.setVisibility(View.INVISIBLE);
 				}
 			}
-		};
-		thread.start();
-		try
-		{
-			thread.join();
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-
-		if (dbError)
-		{
-			Toast.makeText(getContext(), R.string.land_not_added, Toast.LENGTH_LONG).show();
-			dbError = false;
-		}
+		}.start();
 	}
 
 	public void loadLanguages()
 	{
 		loadingBP.setVisibility(View.VISIBLE);
-
-		Thread thread = new Thread()
+		new Thread()
 		{
 			@Override
 			public void run()
@@ -142,28 +135,26 @@ public class EditLangFragment extends Fragment
 				List<Language> list = Database.get(getContext()).languages().getAll();
 				Language[] array = new Language[list.size()];
 				list.toArray(array);
-				listAdapter = new LanguagesAdapter(EditLangFragment.this, array);
-				loadingBP.setVisibility(View.INVISIBLE);
+				final LanguagesAdapter adapter =
+						new LanguagesAdapter(EditLangFragment.this, array);
+				getActivity().runOnUiThread(new Runnable()
+				{
+					@Override
+					public void run()
+					{
+						((ListView)view.findViewById(R.id.listLV)).setAdapter(adapter);
+						loadingBP.setVisibility(View.INVISIBLE);
+						if (isLangLoaded)
+						{
+							activity.loadLang();
+						}
+						else
+						{
+							isLangLoaded = true;
+						}
+					}
+				});
 			}
-		};
-		thread.start();
-		try
-		{
-			thread.join();
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-		((ListView)view.findViewById(R.id.listLV)).setAdapter(listAdapter);
-
-		if (isLangLoaded)
-		{
-			activity.loadLang();
-		}
-		else
-		{
-			isLangLoaded = true;
-		}
+		}.start();
 	}
 }

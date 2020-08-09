@@ -29,8 +29,6 @@ public class DictionaryFragment extends Fragment
 
 	private View view;
 
-	private ListAdapter listAdapter;
-
 	public DictionaryFragment(@NonNull String lang1, @NonNull String lang2)
 	{
 		lang = new Pair<>(lang1, lang2);
@@ -71,8 +69,7 @@ public class DictionaryFragment extends Fragment
 	public void loadWords()
 	{
 		loadingPB.setVisibility(View.VISIBLE);
-
-		Thread thread = new Thread()
+		new Thread()
 		{
 			@Override
 			public void run()
@@ -81,21 +78,18 @@ public class DictionaryFragment extends Fragment
 						.getForLang(lang.first, lang.second);
 				Translation[] array = new Translation[list.size()];
 				list.toArray(array);
-				DictionaryAdapter adapter = new DictionaryAdapter(
+				final DictionaryAdapter adapter = new DictionaryAdapter(
 						DictionaryFragment.this, array, lang);
-				listAdapter = adapter;
-				loadingPB.setVisibility(View.INVISIBLE);
+				getActivity().runOnUiThread(new Runnable()
+				{
+					@Override
+					public void run()
+					{
+						((ListView)view.findViewById(R.id.listLV)).setAdapter(adapter);
+						loadingPB.setVisibility(View.INVISIBLE);
+					}
+				});
 			}
-		};
-		thread.start();
-		try
-		{
-			thread.join();
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-		((ListView)view.findViewById(R.id.listLV)).setAdapter(listAdapter);
+		}.start();
 	}
 }

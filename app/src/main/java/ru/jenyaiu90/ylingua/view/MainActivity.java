@@ -34,8 +34,6 @@ public class MainActivity extends AppCompatActivity
 
 	private boolean editingLang;
 
-	private SpinnerAdapter listAdapter;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -143,7 +141,7 @@ public class MainActivity extends AppCompatActivity
 	public void loadLang()
 	{
 		langPB.setVisibility(View.VISIBLE);
-		Thread thread = new Thread()
+		new Thread()
 		{
 			@Override
 			public void run()
@@ -154,27 +152,24 @@ public class MainActivity extends AppCompatActivity
 				{
 					langs[i] = languages.get(i).getCode();
 				}
-				ArrayAdapter<String> adapter =
+				final ArrayAdapter<String> adapter =
 						new ArrayAdapter<>(MainActivity.this,
 										   android.R.layout.simple_spinner_item, langs);
 				adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-				listAdapter = adapter;
 				lang1 = null;
 				lang2 = null;
-				langPB.setVisibility(View.INVISIBLE);
+				runOnUiThread(new Runnable()
+				{
+					@Override
+					public void run()
+					{
+						lang1SP.setAdapter(adapter);
+						lang2SP.setAdapter(adapter);
+						langPB.setVisibility(View.INVISIBLE);
+					}
+				});
 			}
-		};
-		thread.start();
-		try
-		{
-			thread.join();
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-		lang1SP.setAdapter(listAdapter);
-		lang2SP.setAdapter(listAdapter);
+		}.start();
 	}
 
 	public void start()

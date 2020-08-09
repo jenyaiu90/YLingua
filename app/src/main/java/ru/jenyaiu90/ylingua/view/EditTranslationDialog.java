@@ -63,13 +63,20 @@ public class EditTranslationDialog extends DialogFragment
 				@Override
 				public void run()
 				{
-					String word1, word2;
+					final String word1, word2;
 					Words words = Database.get(getContext()).words();
 					word1 = words.getById(translation.getWord1()).getWord();
 					word2 = words.getById(translation.getWord2()).getWord();
-					word1ET.setText(word1);
-					word2ET.setText(word2);
-					translationPB.setVisibility(View.INVISIBLE);
+					getActivity().runOnUiThread(new Runnable()
+					{
+						@Override
+						public void run()
+						{
+							word1ET.setText(word1);
+							word2ET.setText(word2);
+							translationPB.setVisibility(View.INVISIBLE);
+						}
+					});
 				}
 			}.start();
 		}
@@ -94,16 +101,37 @@ public class EditTranslationDialog extends DialogFragment
 						}
 					}
 				})
+				.setNeutralButton(R.string.delete, translation != null ?
+						new DialogInterface.OnClickListener()
+				{
+					@Override
+					public void onClick(DialogInterface dialog, int which)
+					{
+						new AlertDialog.Builder(getContext())
+								.setMessage(R.string.translation_delete_sure)
+								.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener()
+								{
+									@Override
+									public void onClick(DialogInterface dialog, int which)
+									{
+										deleteTranslation();
+									}
+								})
+								.setNegativeButton(R.string.no, null)
+								.create()
+								.show();
+					}
+				} : null)
 				.setNegativeButton(R.string.cancel, null)
 				.create();
 	}
 
 	public void saveTranslation(@NonNull final Pair<String, String> words)
 	{
-		Thread thread;
+		translationPB.setVisibility(View.VISIBLE);
 		if (translation != null)
 		{
-			thread = new Thread()
+			new Thread()
 			{
 				@Override
 				public void run()
@@ -150,12 +178,22 @@ public class EditTranslationDialog extends DialogFragment
 					}
 
 					db.translations().update(translation);
+
+					getActivity().runOnUiThread(new Runnable()
+					{
+						@Override
+						public void run()
+						{
+							translationPB.setVisibility(View.INVISIBLE);
+							fragment.loadWords();
+						}
+					});
 				}
-			};
+			}.start();
 		}
 		else
 		{
-			thread = new Thread()
+			new Thread()
 			{
 				@Override
 				public void run()
@@ -199,20 +237,40 @@ public class EditTranslationDialog extends DialogFragment
 													  2, id1, id2, false);
 						db.translations().insert(translation);
 					}
+
+					getActivity().runOnUiThread(new Runnable()
+					{
+						@Override
+						public void run()
+						{
+							translationPB.setVisibility(View.INVISIBLE);
+							fragment.loadWords();
+						}
+					});
 				}
-			};
+			}.start();
 		}
+	}
+
+	private void deleteTranslation()
+	{
 		translationPB.setVisibility(View.VISIBLE);
-		thread.start();
-		try
+		new Thread()
 		{
-			thread.join();
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-		translationPB.setVisibility(View.INVISIBLE);
-		fragment.loadWords();
+			@Override
+			public void run()
+			{
+				Database.get(getContext()).translations().delete(translation);
+				fragment.getActivity().runOnUiThread(new Runnable()
+				{
+					@Override
+					public void run()
+					{
+						translationPB.setVisibility(View.INVISIBLE);
+						fragment.loadWords();
+					}
+				});
+			}
+		}.start();
 	}
 }
