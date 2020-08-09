@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tool="http://schemas.android.com/tools">
+	
+	<ProgressBar
+		android:id="@+id/translationPB"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		app:layout_constraintBottom_toBottomOf="@id/translationBR"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+		android:indeterminate="true"
+		android:visibility="invisible"/>
+	
+	<androidx.constraintlayout.widget.Barrier
+		android:id="@+id/translationBR"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		app:constraint_referenced_ids="lang1TV,lang2TV,word1ET,word2ET"
+		app:barrierDirection="top"/>
+	
+	<TextView
+		android:id="@+id/lang1TV"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toStartOf="@id/word1ET"
+		android:layout_margin="8dp"
+		tool:text="L1"
+		android:textSize="30sp"
+		android:textColor="@android:color/black"/>
+	
+	<EditText
+		android:id="@+id/word1ET"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		app:layout_constraintTop_toTopOf="@id/lang1TV"
+		app:layout_constraintBottom_toBottomOf="@id/lang1TV"
+		app:layout_constraintStart_toEndOf="@id/lang1TV"
+		app:layout_constraintEnd_toStartOf="@id/word2ET"
+		android:hint="@string/first_word"/>
+	
+	<EditText
+		android:id="@+id/word2ET"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		app:layout_constraintTop_toTopOf="@id/lang2TV"
+		app:layout_constraintBottom_toBottomOf="@id/lang2TV"
+		app:layout_constraintStart_toEndOf="@id/word1ET"
+		app:layout_constraintEnd_toStartOf="@id/lang2TV"
+		android:hint="@string/second_word"/>
+	
+	<TextView
+		android:id="@+id/lang2TV"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		app:layout_constraintTop_toTopOf="@id/lang1TV"
+		app:layout_constraintBottom_toBottomOf="@id/lang1TV"
+		app:layout_constraintStart_toEndOf="@id/word2ET"
+		app:layout_constraintEnd_toEndOf="parent"
+		android:layout_margin="8dp"
+		tool:text="L2"
+		android:textSize="30sp"
+		android:textColor="@android:color/black"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

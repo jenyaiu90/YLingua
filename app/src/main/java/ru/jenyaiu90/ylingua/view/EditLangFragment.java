@@ -1,7 +1,6 @@
-package ru.jenyaiu90.ylingua.activity;
+package ru.jenyaiu90.ylingua.view;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
@@ -12,7 +11,6 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
@@ -23,11 +21,9 @@ import android.widget.Toast;
 import java.util.List;
 
 import ru.jenyaiu90.ylingua.R;
-import ru.jenyaiu90.ylingua.adapter.DictionaryAdapter;
 import ru.jenyaiu90.ylingua.adapter.LanguagesAdapter;
 import ru.jenyaiu90.ylingua.database.Database;
 import ru.jenyaiu90.ylingua.entity.Language;
-import ru.jenyaiu90.ylingua.entity.Translation;
 
 public class EditLangFragment extends Fragment
 {

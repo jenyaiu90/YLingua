@@ -1,4 +1,4 @@
-package ru.jenyaiu90.ylingua.activity;
+package ru.jenyaiu90.ylingua.view;
 
 import android.os.Bundle;
 

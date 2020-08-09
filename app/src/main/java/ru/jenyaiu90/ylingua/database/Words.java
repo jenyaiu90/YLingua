@@ -19,6 +19,9 @@ public interface Words
 	@Query("SELECT * FROM words WHERE word = :word AND language = :language")
 	List<Word> getWord(String word, String language);
 
+	@Query("SELECT MAX(id) FROM words")
+	int getLastId();
+
 	@Insert
 	void insert(Word... words);
 

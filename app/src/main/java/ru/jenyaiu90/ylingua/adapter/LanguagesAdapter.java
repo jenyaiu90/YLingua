@@ -12,7 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import ru.jenyaiu90.ylingua.R;
-import ru.jenyaiu90.ylingua.activity.EditLangFragment;
+import ru.jenyaiu90.ylingua.view.EditLangFragment;
 import ru.jenyaiu90.ylingua.database.Database;
 import ru.jenyaiu90.ylingua.entity.Language;
 

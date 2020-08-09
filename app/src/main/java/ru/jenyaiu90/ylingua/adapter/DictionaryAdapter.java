@@ -1,32 +1,43 @@
 package ru.jenyaiu90.ylingua.adapter;
 
-import android.content.Context;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
 import ru.jenyaiu90.ylingua.R;
+import ru.jenyaiu90.ylingua.view.DictionaryFragment;
 import ru.jenyaiu90.ylingua.database.Database;
 import ru.jenyaiu90.ylingua.entity.Translation;
+import ru.jenyaiu90.ylingua.view.EditTranslationDialog;
 
 public class DictionaryAdapter extends ArrayAdapter<Translation>
 {
-	View[] views;
+	private View[] views;
+	private CheckBox[] learnedCBs;
+	private DictionaryFragment fragment;
+	private Translation[] array;
+	private Pair<String, String> lang;
 
-	public DictionaryAdapter(Context context, Translation[] array)
+	public DictionaryAdapter(@NonNull DictionaryFragment fragment, Translation[] array,
+							 @NonNull Pair<String, String> lang)
 	{
-		super(context, R.layout.adapter_dictionary, array);
+		super(fragment.getContext(), R.layout.adapter_dictionary, array);
 		views = new View[array.length];
+		learnedCBs = new CheckBox[array.length];
+		this.fragment = fragment;
+		this.array = array;
+		this.lang = lang;
 	}
 
 	@Override
 	@NonNull
-	public View getView(int position, View convertView, @NonNull ViewGroup parent)
+	public View getView(final int position, View convertView, @NonNull ViewGroup parent)
 	{
 		if (convertView == null)
 		{
@@ -35,11 +46,31 @@ public class DictionaryAdapter extends ArrayAdapter<Translation>
 											  //parent, false);
 		}
 		views[position] = convertView;
+		learnedCBs[position] = convertView.findViewById(R.id.learnedCB);
 
-		((TextView)convertView.findViewById(R.id.firstTV)).setText(
-				Database.get(getContext()).words().getById(getItem(position).getWord1()).getWord());
-		((TextView)convertView.findViewById(R.id.secondTV)).setText(
-				Database.get(getContext()).words().getById(getItem(position).getWord2()).getWord());
+		new Thread()
+		{
+			@Override
+			public void run()
+			{
+				((TextView)views[position].findViewById(R.id.firstTV)).setText(
+						Database.get(getContext()).words().getById(getItem(position).getWord1())
+								.getWord());
+				((TextView)views[position].findViewById(R.id.secondTV)).setText(
+						Database.get(getContext()).words().getById(getItem(position).getWord2())
+								.getWord());
+			}
+		}.start();
+
+		learnedCBs[position].setChecked(getItem(position).getLearned());
+		learnedCBs[position].setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				switchLearned(v);
+			}
+		});
 
 		convertView.setOnClickListener(new View.OnClickListener()
 		{
@@ -57,11 +88,48 @@ public class DictionaryAdapter extends ArrayAdapter<Translation>
 
 				if (i < views.length)
 				{
-					//TODO: Change word
+					EditTranslationDialog dialog =
+							new EditTranslationDialog(array[i], lang, fragment);
+					dialog.show(fragment.getFragmentManager(), null);
 				}
 			}
 		});
 
 		return convertView;
+	}
+
+	private void switchLearned(final View v)
+	{
+		fragment.loadingPB.setVisibility(View.VISIBLE);
+		Thread thread = new Thread()
+		{
+			@Override
+			public void run()
+			{
+				int i;
+				for (i = 0; i < learnedCBs.length; i++)
+				{
+					if (v == learnedCBs[i])
+					{
+						break;
+					}
+				}
+				if (i < learnedCBs.length)
+				{
+					array[i].setLearned(!array[i].getLearned());
+					Database.get(getContext()).translations().update(array[i]);
+				}
+			}
+		};
+		thread.start();
+		try
+		{
+			thread.join();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		fragment.loadWords();
 	}
 }

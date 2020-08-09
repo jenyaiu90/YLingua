@@ -1,4 +1,4 @@
-package ru.jenyaiu90.ylingua.activity;
+package ru.jenyaiu90.ylingua.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -10,14 +10,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ListAdapter;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import ru.jenyaiu90.ylingua.R;
