@@ -114,7 +114,7 @@ public class EditTranslationDialog extends DialogFragment
 						List<Word> word = db.words().getWord(words.first, lang.first);
 						if (word.isEmpty())
 						{
-							int id = db.words().getLastId() + 1;
+							int id = db.words().count() > 0 ? db.words().getLastId() + 1 : 1;
 							db.words().insert(new Word(id, words.first, lang.first));
 							translation.setWord1(id);
 						}
@@ -134,7 +134,7 @@ public class EditTranslationDialog extends DialogFragment
 						List<Word> word = db.words().getWord(words.second, lang.second);
 						if (word.isEmpty())
 						{
-							int id = db.words().getLastId() + 1;
+							int id = db.words().count() > 0 ? db.words().getLastId() + 1 : 1;
 							db.words().insert(new Word(id, words.second, lang.second));
 							translation.setWord2(id);
 						}
@@ -166,7 +166,7 @@ public class EditTranslationDialog extends DialogFragment
 					List<Word> fWord = db.words().getWord(words.first, lang.first);
 					if (fWord.isEmpty())
 					{
-						id1 = db.words().getLastId() + 1;
+						id1 = db.words().count() > 0 ? db.words().getLastId() + 1 : 1;
 						db.words().insert(new Word(id1, words.first, lang.first));
 					}
 					else
@@ -177,7 +177,7 @@ public class EditTranslationDialog extends DialogFragment
 					List<Word> sWord = db.words().getWord(words.second, lang.second);
 					if (sWord.isEmpty())
 					{
-						id2 = db.words().getLastId() + 1;
+						id2 = db.words().count() > 0 ? db.words().getLastId() + 1 : 1;
 						db.words().insert(new Word(id2, words.second, lang.second));
 					}
 					else
@@ -194,9 +194,10 @@ public class EditTranslationDialog extends DialogFragment
 
 					if (db.translations().getTranslation(id1, id2).isEmpty())
 					{
-						db.translations().insert(
-								new Translation(db.translations().getLastId() + 1,
-												id1, id2, false));
+						translation = new Translation(db.translations().count() > 0 ?
+													  db.translations().getLastId() + 1 :
+													  2, id1, id2, false);
+						db.translations().insert(translation);
 					}
 				}
 			};

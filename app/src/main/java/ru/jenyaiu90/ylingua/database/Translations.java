@@ -35,6 +35,9 @@ public interface Translations
 	@Query("SELECT * FROM translations WHERE word1 = :id OR word2 = :id")
 	List<Translation> getWithWord(int id);
 
+	@Query("SELECT COUNT(*) FROM translations")
+	int count();
+
 	@Insert
 	void insert(Translation... translations);
 

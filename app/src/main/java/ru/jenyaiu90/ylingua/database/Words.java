@@ -22,6 +22,9 @@ public interface Words
 	@Query("SELECT MAX(id) FROM words")
 	int getLastId();
 
+	@Query("SELECT COUNT(*) FROM words")
+	int count();
+
 	@Insert
 	void insert(Word... words);
 
