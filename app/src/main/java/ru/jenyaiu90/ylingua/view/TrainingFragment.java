@@ -15,11 +15,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -39,7 +39,7 @@ public class TrainingFragment extends Fragment
 	private TextView wordTV;
 	private ProgressBar wordPB;
 	private EditText translationET;
-	private Button okBT;
+	private ImageButton okIB;
 	private CheckBox learnedCB;
 	private TextView rightTV;
 
@@ -69,7 +69,7 @@ public class TrainingFragment extends Fragment
 		wordTV = view.findViewById(R.id.wordTV);
 		wordPB = view.findViewById(R.id.wordPB);
 		translationET = view.findViewById(R.id.translationET);
-		okBT = view.findViewById(R.id.okBT);
+		okIB = view.findViewById(R.id.okIB);
 		learnedCB = view.findViewById(R.id.learnedCB);
 		rightTV = view.findViewById(R.id.rightTV);
 
@@ -108,7 +108,7 @@ public class TrainingFragment extends Fragment
 							wordTV.setText(R.string.error);
 							wordTV.setTextColor(Color.GRAY);
 							translationET.setEnabled(false);
-							okBT.setEnabled(false);
+							okIB.setEnabled(false);
 							wordPB.setVisibility(View.INVISIBLE);
 							Toast.makeText(getContext(), R.string.no_words, Toast.LENGTH_LONG)
 									.show();
@@ -149,7 +149,7 @@ public class TrainingFragment extends Fragment
 					public void run()
 					{
 						wordTV.setText(word);
-						okBT.setOnClickListener(new View.OnClickListener()
+						okIB.setOnClickListener(new View.OnClickListener()
 						{
 							@Override
 							public void onClick(View v)
@@ -194,8 +194,8 @@ public class TrainingFragment extends Fragment
 			rightTV.setText(makeRight(translations));
 		}
 		translationET.setEnabled(false);
-		okBT.setText(R.string.next);
-		okBT.setOnClickListener(new View.OnClickListener()
+		okIB.setContentDescription(getResources().getString(R.string.next));
+		okIB.setOnClickListener(new View.OnClickListener()
 		{
 			@Override
 			public void onClick(View v)
