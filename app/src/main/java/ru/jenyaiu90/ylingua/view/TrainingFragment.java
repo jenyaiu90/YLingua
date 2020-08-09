@@ -77,7 +77,7 @@ public class TrainingFragment extends Fragment
 
 	private void loadQuestion()
 	{
-		learnedCB.setVisibility(View.VISIBLE);
+		wordPB.setVisibility(View.VISIBLE);
 		new Thread()
 		{
 			@Override
