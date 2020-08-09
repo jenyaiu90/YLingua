@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -180,9 +181,15 @@ public class MainActivity extends AppCompatActivity
 		}
 		else
 		{
-			//TODO: Start
-			Toast.makeText(MainActivity.this, "Starting will be here...", Toast.LENGTH_LONG).show();
+			training();
 		}
+	}
+
+	public void training()
+	{
+		loadFragment(new TrainingFragment(
+				MainActivity.this, new Pair<>(lang1, lang2), true),
+				false);
 	}
 
 	private void openDictionary()

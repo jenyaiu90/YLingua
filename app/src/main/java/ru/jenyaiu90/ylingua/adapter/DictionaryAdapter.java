@@ -116,6 +116,7 @@ public class DictionaryAdapter extends ArrayAdapter<Translation>
 				}
 				if (i < learnedCBs.length)
 				{
+
 					array[i].setLearned(!array[i].getLearned());
 					Database.get(getContext()).translations().update(array[i]);
 					fragment.getActivity().runOnUiThread(new Runnable()
