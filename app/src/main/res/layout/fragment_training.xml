@@ -13,12 +13,14 @@
         android:id="@+id/rightTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/wordPB"
+        app:layout_constraintBottom_toTopOf="@id/wordTV"
         app:layout_constraintStart_toEndOf="@id/beginGL"
         app:layout_constraintEnd_toStartOf="@id/endGL"
         tool:text="Right answer"
+        android:textSize="30sp"
         android:textStyle="bold"
-        android:textColor="@android:color/holo_green_dark"/>
+        android:textColor="#229933"
+        android:background="#FFCCCC"/>
 
     <TextView
         android:id="@+id/wordTV"
@@ -28,6 +30,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:paddingBottom="32dp"
+        android:paddingTop="16dp"
         tool:text="Word"
         android:textColor="@android:color/black"
         android:textSize="40sp"

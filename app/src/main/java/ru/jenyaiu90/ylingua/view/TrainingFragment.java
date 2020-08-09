@@ -8,6 +8,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.util.Pair;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -153,36 +154,55 @@ public class TrainingFragment extends Fragment
 							@Override
 							public void onClick(View v)
 							{
-								if (translations.contains(translationET.getText().toString()))
-								{
-									trainingCL.setBackground(getResources()
-											.getDrawable(R.drawable.true_card));
-									learnedCB.setVisibility(View.VISIBLE);
-									learnedCB.setEnabled(true);
-								}
-								else
-								{
-									trainingCL.setBackground(getResources()
-											.getDrawable(R.drawable.false_card));
-									rightTV.setText(makeRight(translations));
-								}
-								translationET.setEnabled(false);
-								okBT.setText(R.string.next);
-								okBT.setOnClickListener(new View.OnClickListener()
-								{
-									@Override
-									public void onClick(View v)
-									{
-										activity.training();
-									}
-								});
+								TrainingFragment.this.onClick();
 							}
 						});
+						translationET.setOnEditorActionListener(new TextView.OnEditorActionListener()
+						{
+							@Override
+							public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
+							{
+								if (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)
+								{
+									onClick();
+									return true;
+								}
+								return false;
+							}
+						});
+
 						wordPB.setVisibility(View.INVISIBLE);
 					}
 				});
 			}
 		}.start();
+	}
+
+	private void onClick()
+	{
+		if (translations.contains(translationET.getText().toString()))
+		{
+			trainingCL.setBackground(getResources()
+					.getDrawable(R.drawable.true_card));
+			learnedCB.setVisibility(View.VISIBLE);
+			learnedCB.setEnabled(true);
+		}
+		else
+		{
+			trainingCL.setBackground(getResources()
+					.getDrawable(R.drawable.false_card));
+			rightTV.setText(makeRight(translations));
+		}
+		translationET.setEnabled(false);
+		okBT.setText(R.string.next);
+		okBT.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				activity.training();
+			}
+		});
 	}
 
 	public static String makeRight(List<String> right)
