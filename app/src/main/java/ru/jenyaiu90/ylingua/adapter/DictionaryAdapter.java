@@ -56,12 +56,19 @@ public class DictionaryAdapter extends ArrayAdapter<Translation>
 			@Override
 			public void run()
 			{
-				((TextView)views[position].findViewById(R.id.firstTV)).setText(
-						Database.get(getContext()).words().getById(getItem(position).getWord1())
-								.getWord());
-				((TextView)views[position].findViewById(R.id.secondTV)).setText(
-						Database.get(getContext()).words().getById(getItem(position).getWord2())
-								.getWord());
+				final String first = Database.get(getContext()).words().getById(getItem(position)
+						.getWord1()).getWord();
+				final String second = Database.get(getContext()).words().getById(getItem(position)
+						.getWord2()).getWord();
+				fragment.getActivity().runOnUiThread(new Runnable()
+				{
+					@Override
+					public void run()
+					{
+						((TextView)views[position].findViewById(R.id.firstTV)).setText(first);
+						((TextView)views[position].findViewById(R.id.secondTV)).setText(second);
+					}
+				});
 			}
 		}.start();
 
