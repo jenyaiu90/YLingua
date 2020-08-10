@@ -3,8 +3,11 @@ package ru.jenyaiu90.ylingua.database;
 import android.content.Context;
 import android.util.Pair;
 
+import androidx.annotation.NonNull;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.migration.Migration;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import java.util.List;
 
@@ -15,6 +18,17 @@ import ru.jenyaiu90.ylingua.entity.Word;
 @androidx.room.Database(entities = {Language.class, Word.class, Translation.class}, version = 2)
 public abstract class Database extends RoomDatabase
 {
+	// Migrations
+	private static final Migration MIGRATION_1_2 = new Migration(1, 2)
+	{
+		@Override
+		public void migrate(@NonNull SupportSQLiteDatabase database)
+		{
+			database.execSQL("ALTER TABLE translations ADD COLUMN learned2 INTEGER NOT NULL DEFAULT 0");
+			database.execSQL("UPDATE translations SET learned2 = 0");
+		}
+	};
+
 	public abstract Languages languages();
 	public abstract Translations translations();
 	public abstract Words words();
@@ -43,7 +57,9 @@ public abstract class Database extends RoomDatabase
 			builder = Room.databaseBuilder(context.getApplicationContext(),
 										   Database.class, DB_NAME);
 		}
-		return builder.build();
+		return builder
+				.addMigrations(MIGRATION_1_2)
+				.build();
 	}
 
 	public static void setTranslationLearned(Context context, int n, int word,

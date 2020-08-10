@@ -23,7 +23,7 @@ public interface Translations
 	List<Translation> getTranslation(int word1, int word2);
 
 	@Query("SELECT translations.id, translations.word1, translations.word2, " +
-			"translations.learned1, translations.learned2 " +
+			"translations.learned, translations.learned2 " +
 			"FROM translations " +
 			"LEFT JOIN words AS words1 ON words1.id = word1 " +
 			"LEFT JOIN words AS words2 ON words2.id = word2 " +
@@ -33,18 +33,18 @@ public interface Translations
 	List<Translation> getForLang(@NonNull String language1, @NonNull String language2);
 
 	@Query("SELECT translations.id, translations.word1, translations.word2, " +
-			"translations.learned1, translations.learned2 " +
+			"translations.learned, translations.learned2 " +
 			"FROM translations " +
 			"LEFT JOIN words AS words1 ON words1.id = word1 " +
 			"LEFT JOIN words AS words2 ON words2.id = word2 " +
 			"WHERE (words1.language = :language1 AND words2.language = :language2 " +
 			"OR words1.language = :language2 AND words2.language = :language1) " +
-			"AND translations.learned1 = 0 " +
+			"AND translations.learned = 0 " +
 			"ORDER BY words1.word, words2.word")
 	List<Translation> getForLangNotLearned1(@NonNull String language1, @NonNull String language2);
 
 	@Query("SELECT translations.id, translations.word1, translations.word2, " +
-			"translations.learned1, translations.learned2 " +
+			"translations.learned, translations.learned2 " +
 			"FROM translations " +
 			"LEFT JOIN words AS words1 ON words1.id = word1 " +
 			"LEFT JOIN words AS words2 ON words2.id = word2 " +

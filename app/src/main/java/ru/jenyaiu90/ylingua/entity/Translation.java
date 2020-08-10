@@ -1,6 +1,7 @@
 package ru.jenyaiu90.ylingua.entity;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
@@ -21,7 +22,9 @@ public class Translation
 	@PrimaryKey
 	private int id;
 	private int word1, word2;
-	private boolean learned1, learned2;
+	@ColumnInfo(name = "learned")
+	private boolean learned1;
+	private boolean learned2;
 
 	public Translation(int id, int word1, int word2, boolean learned1, boolean learned2)
 	{
