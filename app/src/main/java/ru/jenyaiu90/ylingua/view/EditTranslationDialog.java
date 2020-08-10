@@ -234,11 +234,11 @@ public class EditTranslationDialog extends DialogFragment
 					{
 						translation = new Translation(db.translations().count() > 0 ?
 													  db.translations().getLastId() + 1 :
-													  2, id1, id2, false);
+													  2, id1, id2, false, false);
 						db.translations().insert(translation);
 					}
 
-					getActivity().runOnUiThread(new Runnable()
+					fragment.getActivity().runOnUiThread(new Runnable()
 					{
 						@Override
 						public void run()

@@ -9,7 +9,7 @@ import ru.jenyaiu90.ylingua.entity.Language;
 import ru.jenyaiu90.ylingua.entity.Translation;
 import ru.jenyaiu90.ylingua.entity.Word;
 
-@androidx.room.Database(entities = {Language.class, Word.class, Translation.class}, version = 1)
+@androidx.room.Database(entities = {Language.class, Word.class, Translation.class}, version = 2)
 public abstract class Database extends RoomDatabase
 {
 	public abstract Languages languages();

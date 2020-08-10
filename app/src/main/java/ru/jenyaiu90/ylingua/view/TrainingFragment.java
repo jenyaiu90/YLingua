@@ -12,7 +12,6 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -70,7 +69,7 @@ public class TrainingFragment extends Fragment
 		wordPB = view.findViewById(R.id.wordPB);
 		translationET = view.findViewById(R.id.translationET);
 		okIB = view.findViewById(R.id.okIB);
-		learnedCB = view.findViewById(R.id.learnedCB);
+		learnedCB = view.findViewById(R.id.learned1CB);
 		rightTV = view.findViewById(R.id.rightTV);
 
 		loadQuestion();

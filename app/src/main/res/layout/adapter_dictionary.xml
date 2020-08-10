@@ -6,7 +6,7 @@
 	xmlns:tool="http://schemas.android.com/tools">
 	
 	<CheckBox
-		android:id="@+id/learnedCB"
+		android:id="@+id/learned1CB"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		app:layout_constraintTop_toTopOf="parent"
@@ -19,7 +19,7 @@
 		android:layout_height="wrap_content"
 		app:layout_constraintTop_toTopOf="parent"
 		app:layout_constraintBottom_toBottomOf="parent"
-		app:layout_constraintStart_toEndOf="@id/learnedCB"
+		app:layout_constraintStart_toEndOf="@id/learned1CB"
 		app:layout_constraintEnd_toStartOf="@id/dictionaryGL"
 		android:layout_margin="8dp"
 		tool:text="First"
@@ -39,9 +39,17 @@
 		app:layout_constraintTop_toTopOf="parent"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintStart_toEndOf="@id/dictionaryGL"
-		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintEnd_toStartOf="@id/learned2CB"
 		android:layout_margin="8dp"
 		tool:text="Second"
 		android:textAlignment="textEnd"
 		android:textColor="@android:color/black"/>
+	
+	<CheckBox
+		android:id="@+id/learned2CB"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

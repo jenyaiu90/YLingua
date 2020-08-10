@@ -66,7 +66,6 @@ public class LanguagesAdapter extends ArrayAdapter<Language>
 								if (i < deleteViews.length)
 								{
 									deleteLanguage(array[i]);
-									fragment.loadLanguages();
 								}
 							}
 						})
@@ -87,6 +86,14 @@ public class LanguagesAdapter extends ArrayAdapter<Language>
 			public void run()
 			{
 				Database.get(getContext()).languages().delete(language);
+				fragment.getActivity().runOnUiThread(new Runnable()
+				{
+					@Override
+					public void run()
+					{
+						fragment.loadLanguages();
+					}
+				});
 			}
 		}.start();
 	}

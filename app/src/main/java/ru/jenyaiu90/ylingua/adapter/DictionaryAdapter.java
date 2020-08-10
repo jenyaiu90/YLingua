@@ -19,7 +19,7 @@ import ru.jenyaiu90.ylingua.view.EditTranslationDialog;
 public class DictionaryAdapter extends ArrayAdapter<Translation>
 {
 	private View[] views;
-	private CheckBox[] learnedCBs;
+	private CheckBox[] learned1CBs, learned2CBs;
 	private DictionaryFragment fragment;
 	private Translation[] array;
 	private Pair<String, String> lang;
@@ -29,7 +29,8 @@ public class DictionaryAdapter extends ArrayAdapter<Translation>
 	{
 		super(fragment.getContext(), R.layout.adapter_dictionary, array);
 		views = new View[array.length];
-		learnedCBs = new CheckBox[array.length];
+		learned1CBs = new CheckBox[array.length];
+		learned2CBs = new CheckBox[array.length];
 		this.fragment = fragment;
 		this.array = array;
 		this.lang = lang;
@@ -46,7 +47,8 @@ public class DictionaryAdapter extends ArrayAdapter<Translation>
 											  //parent, false);
 		}
 		views[position] = convertView;
-		learnedCBs[position] = convertView.findViewById(R.id.learnedCB);
+		learned1CBs[position] = convertView.findViewById(R.id.learned1CB);
+		learned2CBs[position] = convertView.findViewById(R.id.learned2CB);
 
 		new Thread()
 		{
@@ -62,13 +64,22 @@ public class DictionaryAdapter extends ArrayAdapter<Translation>
 			}
 		}.start();
 
-		learnedCBs[position].setChecked(getItem(position).getLearned());
-		learnedCBs[position].setOnClickListener(new View.OnClickListener()
+		learned1CBs[position].setChecked(getItem(position).getLearned1());
+		learned1CBs[position].setOnClickListener(new View.OnClickListener()
 		{
 			@Override
 			public void onClick(View v)
 			{
-				switchLearned(v);
+				switchLearned(v, 1);
+			}
+		});
+		learned2CBs[position].setChecked(getItem(position).getLearned2());
+		learned2CBs[position].setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				switchLearned(v, 2);
 			}
 		});
 
@@ -98,8 +109,9 @@ public class DictionaryAdapter extends ArrayAdapter<Translation>
 		return convertView;
 	}
 
-	private void switchLearned(final View v)
+	private void switchLearned(final View v, final int n)
 	{
+		final CheckBox[] arr = n == 1 ? learned1CBs : learned2CBs;
 		fragment.loadingPB.setVisibility(View.VISIBLE);
 		new Thread()
 		{
@@ -107,18 +119,40 @@ public class DictionaryAdapter extends ArrayAdapter<Translation>
 			public void run()
 			{
 				int i;
-				for (i = 0; i < learnedCBs.length; i++)
+				for (i = 0; i < arr.length; i++)
 				{
-					if (v == learnedCBs[i])
+					if (v == arr[i])
 					{
 						break;
 					}
 				}
-				if (i < learnedCBs.length)
+				if (i < arr.length)
 				{
+					if (n == 1)
+					{
+						boolean isLearned = !array[i].getLearned1();
+						for (Translation j : array)
+						{
+							if (j.getWord1() == array[i].getWord1())
+							{
+								j.setLearned1(isLearned);
+								Database.get(getContext()).translations().update(j);
+							}
+						}
+					}
+					else
+					{
+						boolean isLearned = !array[i].getLearned2();
+						for (Translation j : array)
+						{
+							if (j.getWord2() == array[i].getWord2())
+							{
+								j.setLearned2(isLearned);
+								Database.get(getContext()).translations().update(j);
+							}
+						}
+					}
 
-					array[i].setLearned(!array[i].getLearned());
-					Database.get(getContext()).translations().update(array[i]);
 					fragment.getActivity().runOnUiThread(new Runnable()
 					{
 						@Override
