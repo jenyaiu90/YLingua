@@ -20,6 +20,7 @@ public class DictionaryAdapter extends ArrayAdapter<Translation>
 {
 	private View[] views;
 	private CheckBox[] learned1CBs, learned2CBs;
+	@NonNull
 	private DictionaryFragment fragment;
 	private Translation[] array;
 	private Pair<String, String> lang;
@@ -130,27 +131,13 @@ public class DictionaryAdapter extends ArrayAdapter<Translation>
 				{
 					if (n == 1)
 					{
-						boolean isLearned = !array[i].getLearned1();
-						for (Translation j : array)
-						{
-							if (j.getWord1() == array[i].getWord1())
-							{
-								j.setLearned1(isLearned);
-								Database.get(getContext()).translations().update(j);
-							}
-						}
+						Database.setTranslationLearned(getContext(), n, array[i].getWord1(),
+													   lang, !array[i].getLearned1());
 					}
 					else
 					{
-						boolean isLearned = !array[i].getLearned2();
-						for (Translation j : array)
-						{
-							if (j.getWord2() == array[i].getWord2())
-							{
-								j.setLearned2(isLearned);
-								Database.get(getContext()).translations().update(j);
-							}
-						}
+						Database.setTranslationLearned(getContext(), n, array[i].getWord2(),
+													   lang, !array[i].getLearned2());
 					}
 
 					fragment.getActivity().runOnUiThread(new Runnable()

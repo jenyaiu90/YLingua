@@ -1,9 +1,12 @@
 package ru.jenyaiu90.ylingua.database;
 
 import android.content.Context;
+import android.util.Pair;
 
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+
+import java.util.List;
 
 import ru.jenyaiu90.ylingua.entity.Language;
 import ru.jenyaiu90.ylingua.entity.Translation;
@@ -41,5 +44,34 @@ public abstract class Database extends RoomDatabase
 										   Database.class, DB_NAME);
 		}
 		return builder.build();
+	}
+
+	public static void setTranslationLearned(Context context, int n, int word,
+											 Pair<String, String> lang, boolean isLearned)
+	{
+		List<Translation> translations =
+				get(context).translations().getForLang(lang.first, lang.second);
+		if (n == 1)
+		{
+			for (Translation i : translations)
+			{
+				if (i.getWord1() == word)
+				{
+					i.setLearned1(isLearned);
+					get(context).translations().update(i);
+				}
+			}
+		}
+		else
+		{
+			for (Translation i : translations)
+			{
+				if (i.getWord2() == word)
+				{
+					i.setLearned2(isLearned);
+					get(context).translations().update(i);
+				}
+			}
+		}
 	}
 }

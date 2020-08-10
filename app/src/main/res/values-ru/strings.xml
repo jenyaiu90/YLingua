@@ -19,6 +19,7 @@
 	<string name="answer">Ответить</string>
 	<string name="next">Далее</string>
 	<string name="set_learned">Отметить выученным</string>
+	<string name="with_learned">Повторять выученные слова</string>
 	
 	<string name="lang_code">RU</string>
 	<string name="lang_name">Русский</string>

@@ -5,6 +5,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Transaction;
 import androidx.room.Update;
 
 import java.util.List;
@@ -40,7 +41,18 @@ public interface Translations
 			"OR words1.language = :language2 AND words2.language = :language1) " +
 			"AND translations.learned1 = 0 " +
 			"ORDER BY words1.word, words2.word")
-	List<Translation> getForLangNotLearned(@NonNull String language1, @NonNull String language2);
+	List<Translation> getForLangNotLearned1(@NonNull String language1, @NonNull String language2);
+
+	@Query("SELECT translations.id, translations.word1, translations.word2, " +
+			"translations.learned1, translations.learned2 " +
+			"FROM translations " +
+			"LEFT JOIN words AS words1 ON words1.id = word1 " +
+			"LEFT JOIN words AS words2 ON words2.id = word2 " +
+			"WHERE (words1.language = :language1 AND words2.language = :language2 " +
+			"OR words1.language = :language2 AND words2.language = :language1) " +
+			"AND translations.learned2 = 0 " +
+			"ORDER BY words1.word, words2.word")
+	List<Translation> getForLangNotLearned2(@NonNull String language1, @NonNull String language2);
 
 	@Query("SELECT MAX(id) FROM translations")
 	int getLastId();
