@@ -226,6 +226,18 @@ public class TrainingFragment extends Fragment
 			@Override
 			public void onClick(View v)
 			{
+				if (learnedCB.isChecked())
+				{
+					new Thread()
+					{
+						@Override
+						public void run()
+						{
+							Database.setTranslationLearned(getContext(), n, wordId,
+									lang, true);
+						}
+					}.start();
+				}
 				activity.training(withLearned);
 			}
 		});
