@@ -192,6 +192,7 @@ public class TrainingFragment extends Fragment
 			trainingCL.setBackground(getResources()
 					.getDrawable(R.drawable.false_card));
 			rightTV.setText(makeRight(translations));
+			rightTV.setVisibility(View.VISIBLE);
 		}
 		translationET.setEnabled(false);
 		okIB.setContentDescription(getResources().getString(R.string.next));

@@ -11,18 +11,21 @@
 	
 	<TextView
 		android:id="@+id/rightTV"
-		android:layout_width="wrap_content"
+		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		app:layout_constraintBottom_toTopOf="@id/wordTV"
-		app:layout_constraintStart_toEndOf="@id/beginGL"
-		app:layout_constraintEnd_toStartOf="@id/endGL"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
 		android:padding="8dp"
-		tool:text="Right answer jjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjj jjj"
+		android:layout_marginStart="16dp"
+		android:layout_marginEnd="16dp"
+		tool:text="Right answer"
 		android:textSize="30sp"
 		android:textStyle="bold"
 		android:textColor="#229933"
 		android:textAlignment="center"
-		android:background="#FFCCCC"/>
+		android:background="#FFCCCC"
+		android:visibility="invisible"/>
 	
 	<TextView
 		android:id="@+id/wordTV"
