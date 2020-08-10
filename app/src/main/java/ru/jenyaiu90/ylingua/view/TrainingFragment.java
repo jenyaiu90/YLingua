@@ -8,17 +8,18 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.util.Pair;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -38,8 +39,9 @@ public class TrainingFragment extends Fragment
 	private TextView wordTV;
 	private ProgressBar wordPB;
 	private EditText translationET;
-	private Button okBT;
+	private ImageButton okIB;
 	private CheckBox learnedCB;
+	private TextView rightTV;
 
 	private String word;
 	private LinkedList<String> translations;
@@ -67,8 +69,9 @@ public class TrainingFragment extends Fragment
 		wordTV = view.findViewById(R.id.wordTV);
 		wordPB = view.findViewById(R.id.wordPB);
 		translationET = view.findViewById(R.id.translationET);
-		okBT = view.findViewById(R.id.okBT);
+		okIB = view.findViewById(R.id.okIB);
 		learnedCB = view.findViewById(R.id.learnedCB);
+		rightTV = view.findViewById(R.id.rightTV);
 
 		loadQuestion();
 
@@ -105,7 +108,7 @@ public class TrainingFragment extends Fragment
 							wordTV.setText(R.string.error);
 							wordTV.setTextColor(Color.GRAY);
 							translationET.setEnabled(false);
-							okBT.setEnabled(false);
+							okIB.setEnabled(false);
 							wordPB.setVisibility(View.INVISIBLE);
 							Toast.makeText(getContext(), R.string.no_words, Toast.LENGTH_LONG)
 									.show();
@@ -146,38 +149,74 @@ public class TrainingFragment extends Fragment
 					public void run()
 					{
 						wordTV.setText(word);
-						okBT.setOnClickListener(new View.OnClickListener()
+						okIB.setOnClickListener(new View.OnClickListener()
 						{
 							@Override
 							public void onClick(View v)
 							{
-								if (translations.contains(translationET.getText().toString()))
-								{
-									trainingCL.setBackground(getResources()
-											.getDrawable(R.drawable.true_card));
-									learnedCB.setVisibility(View.VISIBLE);
-									learnedCB.setEnabled(true);
-								}
-								else
-								{
-									trainingCL.setBackground(getResources()
-											.getDrawable(R.drawable.false_card));
-								}
-								okBT.setText(R.string.next);
-								okBT.setOnClickListener(new View.OnClickListener()
-								{
-									@Override
-									public void onClick(View v)
-									{
-										activity.training();
-									}
-								});
+								TrainingFragment.this.onClick();
 							}
 						});
+						translationET.setOnEditorActionListener(new TextView.OnEditorActionListener()
+						{
+							@Override
+							public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
+							{
+								if (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)
+								{
+									onClick();
+									return true;
+								}
+								return false;
+							}
+						});
+
 						wordPB.setVisibility(View.INVISIBLE);
 					}
 				});
 			}
 		}.start();
+	}
+
+	private void onClick()
+	{
+		if (translations.contains(translationET.getText().toString()))
+		{
+			trainingCL.setBackground(getResources()
+					.getDrawable(R.drawable.true_card));
+			learnedCB.setVisibility(View.VISIBLE);
+			learnedCB.setEnabled(true);
+		}
+		else
+		{
+			trainingCL.setBackground(getResources()
+					.getDrawable(R.drawable.false_card));
+			rightTV.setText(makeRight(translations));
+			rightTV.setVisibility(View.VISIBLE);
+		}
+		translationET.setEnabled(false);
+		okIB.setContentDescription(getResources().getString(R.string.next));
+		okIB.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				activity.training();
+			}
+		});
+	}
+
+	public static String makeRight(List<String> right)
+	{
+		if (right.isEmpty())
+		{
+			return null;
+		}
+		String ret = right.get(0);
+		for (int i = 1; i < right.size(); i++)
+		{
+			ret += "; " + right.get(i);
+		}
+		return ret;
 	}
 }

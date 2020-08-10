@@ -1,81 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/trainingCL"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tool="http://schemas.android.com/tools"
-    android:layout_margin="16dp"
-    android:background="@drawable/neutral_card">
-
-    <TextView
-        android:id="@+id/wordTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/wordPB"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:paddingBottom="32dp"
-        tool:text="Word"
-        android:textColor="@android:color/black"
-        android:textSize="40sp"
-        android:textStyle="bold"/>
-    
-    <ProgressBar
-        android:id="@+id/wordPB"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/translationET"
-        app:layout_constraintStart_toEndOf="@id/beginGL"
-        app:layout_constraintEnd_toStartOf="@id/endGL"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-        android:indeterminate="true"
-        android:visibility="invisible"/>
-    
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/beginGL"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintGuide_begin="64dp"
-        android:orientation="vertical"/>
-    
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/endGL"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintGuide_end="64dp"
-        android:orientation="vertical"/>
-    
-    <EditText
-        android:id="@+id/translationET"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/beginGL"
-        app:layout_constraintEnd_toStartOf="@id/endGL"
-        android:textAlignment="center"
-        android:hint="@string/translate"/>
-    
-    <Button
-        android:id="@+id/okBT"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/translationET"
-        app:layout_constraintStart_toEndOf="@id/beginGL"
-        app:layout_constraintEnd_toStartOf="@id/endGL"
-        android:text="@string/answer"/>
-    
-    <CheckBox
-        android:id="@+id/learnedCB"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/okBT"
-        app:layout_constraintStart_toEndOf="@id/beginGL"
-        app:layout_constraintEnd_toStartOf="@id/endGL"
-        android:text="@string/set_learned"
-        android:enabled="false"
-        android:visibility="invisible"/>
+	android:id="@+id/trainingCL"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tool="http://schemas.android.com/tools"
+	android:layout_margin="16dp"
+	android:background="@drawable/neutral_card">
+	
+	<TextView
+		android:id="@+id/rightTV"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		app:layout_constraintBottom_toTopOf="@id/wordTV"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		android:padding="8dp"
+		android:layout_marginStart="16dp"
+		android:layout_marginEnd="16dp"
+		tool:text="Right answer"
+		android:textSize="30sp"
+		android:textStyle="bold"
+		android:textColor="#229933"
+		android:textAlignment="center"
+		android:background="#FFCCCC"
+		android:visibility="invisible"/>
+	
+	<TextView
+		android:id="@+id/wordTV"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		app:layout_constraintBottom_toTopOf="@id/wordPB"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		android:paddingBottom="32dp"
+		android:paddingTop="16dp"
+		tool:text="Word"
+		android:textColor="@android:color/black"
+		android:textSize="40sp"
+		android:textStyle="bold"
+		android:textAlignment="center"/>
+	
+	<ProgressBar
+		android:id="@+id/wordPB"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		app:layout_constraintBottom_toTopOf="@id/translationET"
+		app:layout_constraintStart_toEndOf="@id/beginGL"
+		app:layout_constraintEnd_toStartOf="@id/endGL"
+		style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+		android:indeterminate="true"
+		android:visibility="invisible"/>
+	
+	<androidx.constraintlayout.widget.Guideline
+		android:id="@+id/beginGL"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		app:layout_constraintGuide_begin="64dp"
+		android:orientation="vertical"/>
+	
+	<androidx.constraintlayout.widget.Guideline
+		android:id="@+id/endGL"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		app:layout_constraintGuide_end="64dp"
+		android:orientation="vertical"/>
+	
+	<EditText
+		android:id="@+id/translationET"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintStart_toEndOf="@id/beginGL"
+		app:layout_constraintEnd_toStartOf="@id/endGL"
+		android:textAlignment="center"
+		android:hint="@string/translate"/>
+	
+	<ImageButton
+		android:id="@+id/okIB"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		app:layout_constraintTop_toTopOf="@id/translationET"
+		app:layout_constraintBottom_toBottomOf="@id/translationET"
+		app:layout_constraintStart_toEndOf="@id/endGL"
+		app:layout_constraintEnd_toEndOf="parent"
+		android:src="@android:drawable/ic_menu_send"
+		android:tint="@android:color/holo_blue_dark"
+		android:contentDescription="@string/answer"/>
+	
+	<CheckBox
+		android:id="@+id/learnedCB"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		app:layout_constraintTop_toBottomOf="@id/translationET"
+		app:layout_constraintStart_toEndOf="@id/beginGL"
+		app:layout_constraintEnd_toStartOf="@id/endGL"
+		android:text="@string/set_learned"
+		android:enabled="false"
+		android:visibility="invisible"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
