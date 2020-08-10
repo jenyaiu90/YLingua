@@ -205,4 +205,17 @@ public class MainActivity extends AppCompatActivity
 			loadFragment(new DictionaryFragment(lang1, lang2), false);
 		}
 	}
+
+	@Override
+	public void onBackPressed()
+	{
+		if (editingLang)
+		{
+			editLangBT.callOnClick();
+		}
+		else
+		{
+			super.onBackPressed();
+		}
+	}
 }
