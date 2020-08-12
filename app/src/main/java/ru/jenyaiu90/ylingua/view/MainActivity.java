@@ -173,22 +173,23 @@ public class MainActivity extends AppCompatActivity
 		}.start();
 	}
 
-	public void start()
+	public void start(boolean withLearned)
 	{
 		if (lang1 == null || lang2 == null || lang1.equals(lang2))
 		{
-			Toast.makeText(MainActivity.this, R.string.chose_lang, Toast.LENGTH_LONG).show();
+			Toast.makeText(MainActivity.this, R.string.chose_lang,
+					Toast.LENGTH_LONG).show();
 		}
 		else
 		{
-			training();
+			training(withLearned);
 		}
 	}
 
-	public void training()
+	public void training(boolean withLearned)
 	{
 		loadFragment(new TrainingFragment(
-				MainActivity.this, new Pair<>(lang1, lang2), true),
+				MainActivity.this, new Pair<>(lang1, lang2), withLearned),
 				false);
 	}
 

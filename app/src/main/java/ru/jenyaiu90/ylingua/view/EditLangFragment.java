@@ -77,7 +77,6 @@ public class EditLangFragment extends Fragment
 									loadingBP.setVisibility(View.VISIBLE);
 									addLanguage(langCodeET.getText().toString(),
 												langNameET.getText().toString());
-									loadLanguages();
 								}
 							}
 						})
@@ -104,6 +103,7 @@ public class EditLangFragment extends Fragment
 				try
 				{
 					Database.get(getContext()).languages().insert(new Language(code, name));
+					loadLanguages();
 				}
 				catch (SQLiteConstraintException e)
 				{
@@ -112,7 +112,8 @@ public class EditLangFragment extends Fragment
 						@Override
 						public void run()
 						{
-							Toast.makeText(getContext(), R.string.land_not_added, Toast.LENGTH_LONG).show();
+							Toast.makeText(getContext(), R.string.land_not_added,
+									Toast.LENGTH_LONG).show();
 						}
 					});
 				}

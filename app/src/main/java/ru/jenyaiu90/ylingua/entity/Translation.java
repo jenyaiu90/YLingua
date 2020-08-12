@@ -1,6 +1,7 @@
 package ru.jenyaiu90.ylingua.entity;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
@@ -21,14 +22,17 @@ public class Translation
 	@PrimaryKey
 	private int id;
 	private int word1, word2;
-	private boolean learned;
+	@ColumnInfo(name = "learned")
+	private boolean learned1;
+	private boolean learned2;
 
-	public Translation(int id, int word1, int word2, boolean learned)
+	public Translation(int id, int word1, int word2, boolean learned1, boolean learned2)
 	{
 		this.id = id;
 		this.word1 = word1;
 		this.word2 = word2;
-		this.learned = learned;
+		this.learned1 = learned1;
+		this.learned2 = learned2;
 	}
 
 	public int getId()
@@ -61,20 +65,31 @@ public class Translation
 		this.word2 = word2;
 	}
 
-	public boolean getLearned()
+	public boolean getLearned1()
 	{
-		return learned;
+		return learned1;
 	}
 
-	public void setLearned(boolean learned)
+	public void setLearned1(boolean learned1)
 	{
-		this.learned = learned;
+		this.learned1 = learned1;
+	}
+
+	public boolean getLearned2()
+	{
+		return learned2;
+	}
+
+	public void setLearned2(boolean learned2)
+	{
+		this.learned2 = learned2;
 	}
 
 	@Override
 	@NonNull
 	public String toString()
 	{
-		return String.format(Locale.getDefault(), "%d : %d", word1, word2);
+		return String.format(Locale.getDefault(),
+				"(%b) %d : %d (%b)", learned1, word1, word2, learned2);
 	}
 }

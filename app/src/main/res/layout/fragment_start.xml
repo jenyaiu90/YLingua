@@ -13,5 +13,14 @@
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
 		android:text="@string/start"/>
+	
+	<CheckBox
+		android:id="@+id/withLearnedCB"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		app:layout_constraintTop_toBottomOf="@id/startBT"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		android:text="@string/with_learned"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
