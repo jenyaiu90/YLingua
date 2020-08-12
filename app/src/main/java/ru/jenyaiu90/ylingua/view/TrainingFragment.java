@@ -45,6 +45,7 @@ public class TrainingFragment extends Fragment
 	private String word;
 	private int wordId;
 	private LinkedList<String> translations;
+	private LinkedList<String> lowerTranslations;
 
 	public TrainingFragment(@NonNull MainActivity activity,
 							@NonNull Pair<String, String> lang, boolean withLearned)
@@ -159,6 +160,11 @@ public class TrainingFragment extends Fragment
 						}
 					}
 				}
+				lowerTranslations = new LinkedList<>();
+				for (String j : translations)
+				{
+					lowerTranslations.add(j.toLowerCase());
+				}
 
 				getActivity().runOnUiThread(new Runnable()
 				{
@@ -197,7 +203,7 @@ public class TrainingFragment extends Fragment
 
 	private void onClick(final int n)
 	{
-		if (translations.contains(translationET.getText().toString()))
+		if (lowerTranslations.contains(translationET.getText().toString().toLowerCase()))
 		{
 			trainingCL.setBackground(getResources()
 					.getDrawable(R.drawable.true_card));
