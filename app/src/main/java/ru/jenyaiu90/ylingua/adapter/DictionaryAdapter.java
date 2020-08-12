@@ -22,7 +22,6 @@ public class DictionaryAdapter extends ArrayAdapter<Translation>
 	private CheckBox[] learned1CBs, learned2CBs;
 	@NonNull
 	private DictionaryFragment fragment;
-	private Translation[] array;
 	private Pair<String, String> lang;
 
 	public DictionaryAdapter(@NonNull DictionaryFragment fragment, Translation[] array,
@@ -33,7 +32,6 @@ public class DictionaryAdapter extends ArrayAdapter<Translation>
 		learned1CBs = new CheckBox[array.length];
 		learned2CBs = new CheckBox[array.length];
 		this.fragment = fragment;
-		this.array = array;
 		this.lang = lang;
 	}
 
@@ -78,7 +76,7 @@ public class DictionaryAdapter extends ArrayAdapter<Translation>
 			@Override
 			public void onClick(View v)
 			{
-				switchLearned(v, 1);
+				switchLearned(position, 1);
 			}
 		});
 		learned2CBs[position].setChecked(getItem(position).getLearned2());
@@ -87,7 +85,7 @@ public class DictionaryAdapter extends ArrayAdapter<Translation>
 			@Override
 			public void onClick(View v)
 			{
-				switchLearned(v, 2);
+				switchLearned(position, 2);
 			}
 		});
 
@@ -96,19 +94,10 @@ public class DictionaryAdapter extends ArrayAdapter<Translation>
 			@Override
 			public void onClick(View v)
 			{
-				int i;
-				for (i = 0; i < views.length; i++)
-				{
-					if (views[i] == v)
-					{
-						break;
-					}
-				}
-
-				if (i < views.length)
+				if (position < views.length)
 				{
 					EditTranslationDialog dialog =
-							new EditTranslationDialog(array[i], lang, fragment);
+							new EditTranslationDialog(getItem(position), lang, fragment);
 					dialog.show(fragment.getFragmentManager(), null);
 				}
 			}
@@ -117,7 +106,7 @@ public class DictionaryAdapter extends ArrayAdapter<Translation>
 		return convertView;
 	}
 
-	private void switchLearned(final View v, final int n)
+	private void switchLearned(final int position, final int n)
 	{
 		final CheckBox[] arr = n == 1 ? learned1CBs : learned2CBs;
 		fragment.loadingPB.setVisibility(View.VISIBLE);
@@ -126,25 +115,17 @@ public class DictionaryAdapter extends ArrayAdapter<Translation>
 			@Override
 			public void run()
 			{
-				int i;
-				for (i = 0; i < arr.length; i++)
-				{
-					if (v == arr[i])
-					{
-						break;
-					}
-				}
-				if (i < arr.length)
+				if (position < arr.length && position >= 0)
 				{
 					if (n == 1)
 					{
-						Database.setTranslationLearned(getContext(), n, array[i].getWord1(),
-													   lang, !array[i].getLearned1());
+						Database.setTranslationLearned(getContext(), n, getItem(position).getWord1(),
+													   lang, !getItem(position).getLearned1());
 					}
 					else
 					{
-						Database.setTranslationLearned(getContext(), n, array[i].getWord2(),
-													   lang, !array[i].getLearned2());
+						Database.setTranslationLearned(getContext(), n, getItem(position).getWord2(),
+													   lang, !getItem(position).getLearned2());
 					}
 
 					fragment.getActivity().runOnUiThread(new Runnable()

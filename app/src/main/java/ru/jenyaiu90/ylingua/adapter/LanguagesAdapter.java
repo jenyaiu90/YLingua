@@ -19,20 +19,18 @@ import ru.jenyaiu90.ylingua.entity.Language;
 public class LanguagesAdapter extends ArrayAdapter<Language>
 {
 	private ImageButton[] deleteViews;
-	private Language[] array;
 	private EditLangFragment fragment;
 
 	public LanguagesAdapter(@NonNull EditLangFragment fragment, Language[] array)
 	{
 		super(fragment.getContext(), R.layout.adapter_languages, array);
 		deleteViews = new ImageButton[array.length];
-		this.array = array;
 		this.fragment = fragment;
 	}
 
 	@Override
 	@NonNull
-	public View getView(int position, View convertView, @NonNull ViewGroup parent)
+	public View getView(final int position, View convertView, @NonNull ViewGroup parent)
 	{
 		if (convertView == null)
 		{
@@ -55,17 +53,9 @@ public class LanguagesAdapter extends ArrayAdapter<Language>
 							@Override
 							public void onClick(DialogInterface dialog, int which)
 							{
-								int i;
-								for (i = 0; i < deleteViews.length; i++)
+								if (position < deleteViews.length)
 								{
-									if (deleteViews[i] == v)
-									{
-										break;
-									}
-								}
-								if (i < deleteViews.length)
-								{
-									deleteLanguage(array[i]);
+									deleteLanguage(getItem(position));
 								}
 							}
 						})
