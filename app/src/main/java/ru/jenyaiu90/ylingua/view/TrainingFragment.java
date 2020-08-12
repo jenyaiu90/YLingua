@@ -12,7 +12,6 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -44,6 +43,7 @@ public class TrainingFragment extends Fragment
 	private TextView rightTV;
 
 	private String word;
+	private int wordId;
 	private LinkedList<String> translations;
 
 	public TrainingFragment(@NonNull MainActivity activity,
@@ -70,7 +70,7 @@ public class TrainingFragment extends Fragment
 		wordPB = view.findViewById(R.id.wordPB);
 		translationET = view.findViewById(R.id.translationET);
 		okIB = view.findViewById(R.id.okIB);
-		learnedCB = view.findViewById(R.id.learnedCB);
+		learnedCB = view.findViewById(R.id.learned1CB);
 		rightTV = view.findViewById(R.id.rightTV);
 
 		loadQuestion();
@@ -88,13 +88,29 @@ public class TrainingFragment extends Fragment
 			{
 				Database db = Database.get(getContext());
 				List<Translation> translationList;
-				if (withLearned)
+				final boolean isFirst = Math.random() >= 0.5;
+				boolean hasLearned = withLearned || Math.random() < 0.1;
+				if (hasLearned)
 				{
 					translationList = db.translations().getForLang(lang.first, lang.second);
 				}
 				else
 				{
-					translationList = db.translations().getForLangNotLearned(lang.first, lang.second);
+					if (isFirst)
+					{
+						translationList = db.translations()
+								.getForLangNotLearned1(lang.first, lang.second);
+					}
+					else
+					{
+						translationList = db.translations()
+								.getForLangNotLearned2(lang.first, lang.second);
+					}
+
+					if (translationList.isEmpty())
+					{
+						translationList = db.translations().getForLang(lang.first, lang.second);
+					}
 				}
 				if (translationList.isEmpty())
 				{
@@ -117,12 +133,12 @@ public class TrainingFragment extends Fragment
 					return;
 				}
 				int i = (int)(Math.random() * translationList.size());
-				boolean isFirst = Math.random() >= 0.5;
 
 				translations = new LinkedList<>();
 				if (isFirst)
 				{
-					word = db.words().getById(translationList.get(i).getWord1()).getWord();
+					wordId = translationList.get(i).getWord1();
+					word = db.words().getById(wordId).getWord();
 					for (Translation j : translationList)
 					{
 						if (j.getWord1() == translationList.get(i).getWord1())
@@ -133,7 +149,8 @@ public class TrainingFragment extends Fragment
 				}
 				else
 				{
-					word = db.words().getById(translationList.get(i).getWord2()).getWord();
+					wordId = translationList.get(i).getWord2();
+					word = db.words().getById(wordId).getWord();
 					for (Translation j : translationList)
 					{
 						if (j.getWord2() == translationList.get(i).getWord2())
@@ -154,7 +171,7 @@ public class TrainingFragment extends Fragment
 							@Override
 							public void onClick(View v)
 							{
-								TrainingFragment.this.onClick();
+								TrainingFragment.this.onClick(isFirst ? 1 : 2);
 							}
 						});
 						translationET.setOnEditorActionListener(new TextView.OnEditorActionListener()
@@ -164,7 +181,7 @@ public class TrainingFragment extends Fragment
 							{
 								if (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)
 								{
-									onClick();
+									onClick(isFirst ? 1 : 2);
 									return true;
 								}
 								return false;
@@ -178,7 +195,7 @@ public class TrainingFragment extends Fragment
 		}.start();
 	}
 
-	private void onClick()
+	private void onClick(final int n)
 	{
 		if (translations.contains(translationET.getText().toString()))
 		{
@@ -193,6 +210,14 @@ public class TrainingFragment extends Fragment
 					.getDrawable(R.drawable.false_card));
 			rightTV.setText(makeRight(translations));
 			rightTV.setVisibility(View.VISIBLE);
+			new Thread()
+			{
+				@Override
+				public void run()
+				{
+					Database.setTranslationLearned(getContext(), n, wordId, lang, false);
+				}
+			}.start();
 		}
 		translationET.setEnabled(false);
 		okIB.setContentDescription(getResources().getString(R.string.next));
@@ -201,7 +226,19 @@ public class TrainingFragment extends Fragment
 			@Override
 			public void onClick(View v)
 			{
-				activity.training();
+				if (learnedCB.isChecked())
+				{
+					new Thread()
+					{
+						@Override
+						public void run()
+						{
+							Database.setTranslationLearned(getContext(), n, wordId,
+									lang, true);
+						}
+					}.start();
+				}
+				activity.training(withLearned);
 			}
 		});
 	}

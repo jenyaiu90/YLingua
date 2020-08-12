@@ -19,6 +19,7 @@
 	<string name="answer">Answer</string>
 	<string name="next">Next</string>
 	<string name="set_learned">Set as learned</string>
+	<string name="with_learned">Repeat the learned words</string>
 	
 	<string name="lang_code">EN</string>
 	<string name="lang_name">English</string>
