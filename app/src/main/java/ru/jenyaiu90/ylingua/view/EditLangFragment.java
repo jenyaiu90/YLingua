@@ -29,6 +29,7 @@ public class EditLangFragment extends Fragment
 {
 	private ProgressBar loadingBP;
 	private View view;
+	private ListView listLV;
 
 	private MainActivity activity;
 	private boolean isLangLoaded;
@@ -52,6 +53,7 @@ public class EditLangFragment extends Fragment
 		this.view = view;
 
 		loadingBP = view.findViewById(R.id.loadingPB);
+		listLV = view.findViewById(R.id.listLV);
 
 		view.findViewById(R.id.addBT).setOnClickListener(new View.OnClickListener()
 		{
@@ -143,7 +145,26 @@ public class EditLangFragment extends Fragment
 					@Override
 					public void run()
 					{
-						((ListView)view.findViewById(R.id.listLV)).setAdapter(adapter);
+						if (listLV.getChildCount() > 0)
+						{
+							final int firstVisiblePosition = listLV.getFirstVisiblePosition();
+							View tmp = listLV.getChildAt(0);
+							int topEdge = tmp.getTop();
+							listLV.setAdapter(adapter);
+							listLV.post(new Runnable()
+							{
+								@Override
+								public void run()
+								{
+									listLV.setSelectionFromTop(firstVisiblePosition, 0);
+								}
+							});
+							listLV.scrollBy(0, -topEdge);
+						}
+						else
+						{
+							listLV.setAdapter(adapter);
+						}
 						loadingBP.setVisibility(View.INVISIBLE);
 						if (isLangLoaded)
 						{
