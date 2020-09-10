@@ -48,6 +48,16 @@
 		app:barrierDirection="bottom"
 		app:constraint_referenced_ids="lang1SP,lang2SP"/>
 	
+	<com.google.android.material.tabs.TabLayout
+		android:id="@+id/modeTL"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		app:layout_constraintTop_toTopOf="@id/langsBR"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:tabMode="scrollable"/>
+	
+	<!--
 	<RadioGroup
 		android:id="@+id/modeRG"
 		android:layout_width="0dp"
@@ -72,12 +82,13 @@
 			android:layout_weight="1"
 			android:text="@string/dictionary"/>
 	</RadioGroup>
+	-->
 	
-	<FrameLayout
-		android:id="@+id/fragmentFL"
+	<androidx.viewpager.widget.ViewPager
+		android:id="@+id/fragmentVP"
 		android:layout_width="0dp"
 		android:layout_height="0dp"
-		app:layout_constraintTop_toBottomOf="@id/modeRG"
+		app:layout_constraintTop_toBottomOf="@id/modeTL"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"/>

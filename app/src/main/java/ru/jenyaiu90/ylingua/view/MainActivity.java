@@ -3,6 +3,7 @@ package ru.jenyaiu90.ylingua.view;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 import android.util.Pair;
@@ -17,6 +18,8 @@ import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
+import com.google.android.material.tabs.TabLayout;
+
 import java.util.List;
 
 import ru.jenyaiu90.ylingua.R;
@@ -28,8 +31,9 @@ public class MainActivity extends AppCompatActivity
 	private Button editLangBT;
 	private ProgressBar langPB;
 	private Spinner lang1SP, lang2SP;
-	private RadioButton trainingRB, dictionaryRB;
-	private FrameLayout fragmentFL;
+	private TabLayout modeTL;
+	//private RadioButton trainingRB, dictionaryRB;
+	private ViewPager fragmentVP;
 
 	private String lang1, lang2;
 
@@ -45,9 +49,10 @@ public class MainActivity extends AppCompatActivity
 		langPB = findViewById(R.id.langPB);
 		lang1SP = findViewById(R.id.lang1SP);
 		lang2SP = findViewById(R.id.lang2SP);
-		trainingRB = findViewById(R.id.trainingRB);
-		dictionaryRB = findViewById(R.id.dictionaryRB);
-		fragmentFL = findViewById(R.id.fragmentFL);
+		modeTL = findViewById(R.id.modeTL);
+		//trainingRB = findViewById(R.id.trainingRB);
+		//dictionaryRB = findViewById(R.id.dictionaryRB);
+		fragmentVP = findViewById(R.id.fragmentVP);
 
 		editingLang = false;
 
@@ -205,6 +210,11 @@ public class MainActivity extends AppCompatActivity
 		{
 			loadFragment(new DictionaryFragment(lang1, lang2), false);
 		}
+	}
+
+	public Pair<String, String> getLangs()
+	{
+		return new Pair<>(lang1, lang2);
 	}
 
 	@Override
