@@ -23,6 +23,7 @@ import com.google.android.material.tabs.TabLayout;
 import java.util.List;
 
 import ru.jenyaiu90.ylingua.R;
+import ru.jenyaiu90.ylingua.adapter.MainFragmentPagerAdapter;
 import ru.jenyaiu90.ylingua.database.Database;
 import ru.jenyaiu90.ylingua.entity.Language;
 
@@ -54,6 +55,10 @@ public class MainActivity extends AppCompatActivity
 		//dictionaryRB = findViewById(R.id.dictionaryRB);
 		fragmentVP = findViewById(R.id.fragmentVP);
 
+		fragmentVP.setAdapter(new MainFragmentPagerAdapter(
+				getSupportFragmentManager(), MainActivity.this));
+		modeTL.setupWithViewPager(fragmentVP);
+
 		editingLang = false;
 
 		editLangBT.setOnClickListener(new View.OnClickListener()
@@ -63,12 +68,11 @@ public class MainActivity extends AppCompatActivity
 			{
 				lang1SP.setEnabled(editingLang);
 				lang2SP.setEnabled(editingLang);
-				trainingRB.setEnabled(editingLang);
-				dictionaryRB.setEnabled(editingLang);
+				modeTL.setEnabled(editingLang);
 				if (editingLang)
 				{
 					editLangBT.setText(R.string.edit_lang);
-					trainingRB.setChecked(true);
+					//ToDo: Переключиться на вкладку 0
 					loadFragment(new StartFragment(MainActivity.this), false);
 				}
 				else
@@ -96,7 +100,7 @@ public class MainActivity extends AppCompatActivity
 
 				if (!editingLang)
 				{
-					if (trainingRB.isChecked())
+					if (modeTL.getSelectedTabPosition() == 0)
 					{
 						loadFragment(new StartFragment(MainActivity.this), false);
 					}
@@ -115,6 +119,7 @@ public class MainActivity extends AppCompatActivity
 		};
 		lang1SP.setOnItemSelectedListener(spinnerLstn);
 		lang2SP.setOnItemSelectedListener(spinnerLstn);
+		/*
 		trainingRB.setOnClickListener(new View.OnClickListener()
 		{
 			@Override
@@ -131,12 +136,13 @@ public class MainActivity extends AppCompatActivity
 				openDictionary();
 			}
 		});
+		 */
 	}
 
 	private void loadFragment(Fragment fragment, boolean addToStack)
 	{
 		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-		transaction.replace(R.id.fragmentFL, fragment);
+		transaction.replace(R.id.fragmentVP, fragment);
 		if (addToStack)
 		{
 			transaction.addToBackStack(null);
@@ -203,7 +209,7 @@ public class MainActivity extends AppCompatActivity
 		if (lang1 == null || lang2 == null || lang1.equals(lang2))
 		{
 			Toast.makeText(MainActivity.this, R.string.chose_lang, Toast.LENGTH_LONG).show();
-			trainingRB.setChecked(true);
+			//ToDo: Переключиться на вкладку 1
 			loadFragment(new StartFragment(MainActivity.this), false);
 		}
 		else
