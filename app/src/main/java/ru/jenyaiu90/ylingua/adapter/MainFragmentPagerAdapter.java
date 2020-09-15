@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import ru.jenyaiu90.ylingua.R;
 import ru.jenyaiu90.ylingua.view.DictionaryFragment;
 import ru.jenyaiu90.ylingua.view.MainActivity;
+import ru.jenyaiu90.ylingua.view.MainFragment;
 import ru.jenyaiu90.ylingua.view.StartFragment;
 import ru.jenyaiu90.ylingua.view.TrainingFragment;
 
@@ -18,12 +19,12 @@ public class MainFragmentPagerAdapter extends FragmentPagerAdapter
 {
 	public static final int PAGES_COUNT = 2;
 	private static final int[] TITLES = { R.string.training, R.string.dictionary };
-	private final MainActivity activity;
+	private final MainFragment fragment;
 
-	public MainFragmentPagerAdapter(FragmentManager manager, MainActivity activity)
+	public MainFragmentPagerAdapter(FragmentManager manager, MainFragment fragment)
 	{
 		super(manager);
-		this.activity = activity;
+		this.fragment = fragment;
 	}
 
 	@Override
@@ -39,9 +40,9 @@ public class MainFragmentPagerAdapter extends FragmentPagerAdapter
 		switch (position)
 		{
 			case 0:
-				return new StartFragment(activity);
+				return new StartFragment(fragment);
 			case 1:
-				Pair<String, String> langs = activity.getLangs();
+				Pair<String, String> langs = fragment.getLangs();
 				return new DictionaryFragment(langs.first, langs.second);
 			default:
 				throw new IndexOutOfBoundsException("There are only " + PAGES_COUNT + " pages.");
@@ -51,6 +52,6 @@ public class MainFragmentPagerAdapter extends FragmentPagerAdapter
 	@Override
 	public CharSequence getPageTitle(int position)
 	{
-		return activity.getResources().getString(TITLES[position]);
+		return fragment.getResources().getString(TITLES[position]);
 	}
 }

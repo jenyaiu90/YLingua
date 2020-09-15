@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
@@ -31,13 +32,6 @@ public class MainFragment extends Fragment
 
 	private String lang1, lang2;
 
-	final private MainActivity activity;
-
-	public MainFragment(MainActivity activity)
-	{
-		this.activity = activity;
-	}
-
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
@@ -57,7 +51,7 @@ public class MainFragment extends Fragment
 		fragmentVP = view.findViewById(R.id.fragmentVP);
 
 		fragmentVP.setAdapter(new MainFragmentPagerAdapter(
-				getFragmentManager(), activity));
+				getFragmentManager(), MainFragment.this));
 		modeTL.setupWithViewPager(fragmentVP);
 
 		langPB.setVisibility(View.VISIBLE);
@@ -78,7 +72,7 @@ public class MainFragment extends Fragment
 				adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 				lang1 = null;
 				lang2 = null;
-				activity.runOnUiThread(new Runnable()
+				getActivity().runOnUiThread(new Runnable()
 				{
 					@Override
 					public void run()
@@ -126,7 +120,7 @@ public class MainFragment extends Fragment
 
 		return view;
 	}
-	
+
 	public Pair<String, String> getLangs()
 	{
 		return new Pair<>(lang1, lang2);

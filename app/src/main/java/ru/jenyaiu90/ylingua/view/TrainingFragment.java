@@ -32,7 +32,7 @@ public class TrainingFragment extends Fragment
 	private Pair<String, String> lang;
 	private View view;
 
-	private MainActivity activity;
+	private StartFragment fragment;
 
 	private ConstraintLayout trainingCL;
 	private TextView wordTV;
@@ -47,10 +47,10 @@ public class TrainingFragment extends Fragment
 	private LinkedList<String> translations;
 	private LinkedList<String> lowerTranslations;
 
-	public TrainingFragment(@NonNull MainActivity activity,
+	public TrainingFragment(@NonNull StartFragment fragment,
 							@NonNull Pair<String, String> lang, boolean withLearned)
 	{
-		this.activity = activity;
+		this.fragment = fragment;
 		this.withLearned = withLearned;
 		this.lang = lang;
 	}
@@ -244,7 +244,7 @@ public class TrainingFragment extends Fragment
 						}
 					}.start();
 				}
-				activity.training(withLearned);
+				fragment.training(withLearned);
 			}
 		});
 	}

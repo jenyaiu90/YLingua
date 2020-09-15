@@ -53,16 +53,18 @@ public class MainActivity extends AppCompatActivity
 				if (editingLang)
 				{
 					editLangBT.setText(R.string.edit_lang);
-					loadFragment(new StartFragment(MainActivity.this), false);
+					loadFragment(new MainFragment(), false);
 				}
 				else
 				{
 					editLangBT.setText(R.string.back);
-					loadFragment(new EditLangFragment(MainActivity.this), false);
+					loadFragment(new EditLangFragment(), false);
 				}
 				editingLang = !editingLang;
 			}
 		});
+
+		loadFragment(new MainFragment(), false);
 	}
 
 	private void loadFragment(Fragment fragment, boolean addToStack)
