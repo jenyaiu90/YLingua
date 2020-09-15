@@ -30,13 +30,7 @@ import ru.jenyaiu90.ylingua.entity.Language;
 public class MainActivity extends AppCompatActivity
 {
 	private Button editLangBT;
-	private ProgressBar langPB;
-	private Spinner lang1SP, lang2SP;
-	private TabLayout modeTL;
-	//private RadioButton trainingRB, dictionaryRB;
-	private ViewPager fragmentVP;
-
-	private String lang1, lang2;
+	private FrameLayout mainFL;
 
 	private boolean editingLang;
 
@@ -47,17 +41,7 @@ public class MainActivity extends AppCompatActivity
 		setContentView(R.layout.activity_main);
 
 		editLangBT = findViewById(R.id.editLangBT);
-		langPB = findViewById(R.id.langPB);
-		lang1SP = findViewById(R.id.lang1SP);
-		lang2SP = findViewById(R.id.lang2SP);
-		modeTL = findViewById(R.id.modeTL);
-		//trainingRB = findViewById(R.id.trainingRB);
-		//dictionaryRB = findViewById(R.id.dictionaryRB);
-		fragmentVP = findViewById(R.id.fragmentVP);
-
-		fragmentVP.setAdapter(new MainFragmentPagerAdapter(
-				getSupportFragmentManager(), MainActivity.this));
-		modeTL.setupWithViewPager(fragmentVP);
+		mainFL = findViewById(R.id.mainFL);
 
 		editingLang = false;
 
@@ -66,13 +50,9 @@ public class MainActivity extends AppCompatActivity
 			@Override
 			public void onClick(View v)
 			{
-				lang1SP.setEnabled(editingLang);
-				lang2SP.setEnabled(editingLang);
-				modeTL.setEnabled(editingLang);
 				if (editingLang)
 				{
 					editLangBT.setText(R.string.edit_lang);
-					//ToDo: Переключиться на вкладку 0
 					loadFragment(new StartFragment(MainActivity.this), false);
 				}
 				else
@@ -83,66 +63,12 @@ public class MainActivity extends AppCompatActivity
 				editingLang = !editingLang;
 			}
 		});
-		loadLang();
-		AdapterView.OnItemSelectedListener spinnerLstn = new AdapterView.OnItemSelectedListener()
-		{
-			@Override
-			public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-			{
-				if (parent == lang1SP)
-				{
-					lang1 = (String)parent.getItemAtPosition(position);
-				}
-				else
-				{
-					lang2 = (String)parent.getItemAtPosition(position);
-				}
-
-				if (!editingLang)
-				{
-					if (modeTL.getSelectedTabPosition() == 0)
-					{
-						loadFragment(new StartFragment(MainActivity.this), false);
-					}
-					else
-					{
-						openDictionary();
-					}
-				}
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> parent)
-			{
-
-			}
-		};
-		lang1SP.setOnItemSelectedListener(spinnerLstn);
-		lang2SP.setOnItemSelectedListener(spinnerLstn);
-		/*
-		trainingRB.setOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View v)
-			{
-				loadFragment(new StartFragment(MainActivity.this), false);
-			}
-		});
-		dictionaryRB.setOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View v)
-			{
-				openDictionary();
-			}
-		});
-		 */
 	}
 
 	private void loadFragment(Fragment fragment, boolean addToStack)
 	{
 		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-		transaction.replace(R.id.fragmentVP, fragment);
+		transaction.replace(R.id.mainFL, fragment);
 		if (addToStack)
 		{
 			transaction.addToBackStack(null);
@@ -150,41 +76,7 @@ public class MainActivity extends AppCompatActivity
 		transaction.commit();
 	}
 
-	public void loadLang()
-	{
-		langPB.setVisibility(View.VISIBLE);
-		new Thread()
-		{
-			@Override
-			public void run()
-			{
-				List<Language> languages = Database.get(MainActivity.this).languages().getAll();
-				String[] langs = new String[languages.size()];
-				for (int i = 0; i < languages.size(); i++)
-				{
-					langs[i] = languages.get(i).getCode();
-				}
-				final ArrayAdapter<String> adapter =
-						new ArrayAdapter<>(MainActivity.this,
-										   android.R.layout.simple_spinner_item, langs);
-				adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-				lang1 = null;
-				lang2 = null;
-				runOnUiThread(new Runnable()
-				{
-					@Override
-					public void run()
-					{
-						lang1SP.setAdapter(adapter);
-						lang2SP.setAdapter(adapter);
-						langPB.setVisibility(View.INVISIBLE);
-					}
-				});
-			}
-		}.start();
-	}
-
-	public void start(boolean withLearned)
+	/*public void start(boolean withLearned)
 	{
 		if (lang1 == null || lang2 == null || lang1.equals(lang2))
 		{
@@ -195,16 +87,16 @@ public class MainActivity extends AppCompatActivity
 		{
 			training(withLearned);
 		}
-	}
+	}*/
 
-	public void training(boolean withLearned)
+	/*public void training(boolean withLearned)
 	{
 		loadFragment(new TrainingFragment(
 				MainActivity.this, new Pair<>(lang1, lang2), withLearned),
 				false);
-	}
+	}*/
 
-	private void openDictionary()
+	/*private void openDictionary()
 	{
 		if (lang1 == null || lang2 == null || lang1.equals(lang2))
 		{
@@ -216,12 +108,7 @@ public class MainActivity extends AppCompatActivity
 		{
 			loadFragment(new DictionaryFragment(lang1, lang2), false);
 		}
-	}
-
-	public Pair<String, String> getLangs()
-	{
-		return new Pair<>(lang1, lang2);
-	}
+	}*/
 
 	@Override
 	public void onBackPressed()
