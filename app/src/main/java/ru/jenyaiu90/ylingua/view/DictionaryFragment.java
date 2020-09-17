@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -23,17 +24,12 @@ import ru.jenyaiu90.ylingua.entity.Translation;
 
 public class DictionaryFragment extends Fragment
 {
-	private Pair<String, String> lang;
+	private Pair<String, String> langs;
 
 	public ProgressBar loadingPB;
 	private ListView listLV;
 
 	private View view;
-
-	public DictionaryFragment(@NonNull String lang1, @NonNull String lang2)
-	{
-		lang = new Pair<>(lang1, lang2);
-	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -56,14 +52,19 @@ public class DictionaryFragment extends Fragment
 			@Override
 			public void onClick(View v)
 			{
-				EditTranslationDialog dialog = new EditTranslationDialog(null, lang,
-						DictionaryFragment.this);
-				dialog.show(getFragmentManager(), null);
+				if (langs.first == null || langs.second == null || langs.first.equals(langs.second))
+				{
+					Toast.makeText(getContext(), R.string.chose_lang, Toast.LENGTH_LONG).show();
+				}
+				else
+				{
+					EditTranslationDialog dialog = new EditTranslationDialog(
+							null, langs, DictionaryFragment.this);
+					dialog.show(getFragmentManager(), null);
+				}
 			}
 		});
 		((Button)view.findViewById(R.id.addBT)).setText(R.string.add_word);
-
-		loadWords();
 
 		return view;
 	}
@@ -77,11 +78,11 @@ public class DictionaryFragment extends Fragment
 			public void run()
 			{
 				List<Translation> list = Database.get(getContext()).translations()
-						.getForLang(lang.first, lang.second);
+						.getForLang(langs.first, langs.second);
 				Translation[] array = new Translation[list.size()];
 				list.toArray(array);
 				final DictionaryAdapter adapter = new DictionaryAdapter(
-						DictionaryFragment.this, array, lang);
+						DictionaryFragment.this, array, langs);
 				getActivity().runOnUiThread(new Runnable()
 				{
 					@Override
@@ -112,5 +113,18 @@ public class DictionaryFragment extends Fragment
 				});
 			}
 		}.start();
+	}
+
+	public void setLangs(Pair<String, String> langs)
+	{
+		this.langs = langs;
+		if (langs.first != null && langs.second != null && !langs.first.equals(langs.second))
+		{
+			loadWords();
+		}
+		else
+		{
+			listLV.setAdapter(null);
+		}
 	}
 }
