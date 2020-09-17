@@ -20,6 +20,9 @@ public class StartFragment extends Fragment
 	private MainFragment fragment;
 	private FrameLayout startFL;
 
+	private LayoutInflater inflater;
+	private ViewGroup container;
+
 	public StartFragment(MainFragment fragment)
 	{
 		this.fragment = fragment;
@@ -35,6 +38,8 @@ public class StartFragment extends Fragment
 	public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
 							 Bundle savedInstanceState)
 	{
+		this.inflater = inflater;
+		this.container = container;
 		final View view = inflater.inflate(R.layout.layout_start, container, false);
 		startFL = view.findViewById(R.id.startFL);
 
@@ -58,6 +63,31 @@ public class StartFragment extends Fragment
 			}
 		});
 		return view;
+	}
+
+	public void load()
+	{
+		startFL.removeAllViews();
+		startFL.addView(inflater.inflate(R.layout.layout_start, container, false));
+		startFL.findViewById(R.id.startBT).setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				Pair<String, String> langs = fragment.getLangs();
+				if (langs.first == null || langs.second == null || langs.first.equals(langs.second))
+				{
+					Toast.makeText(getContext(), R.string.chose_lang,
+							Toast.LENGTH_LONG).show();
+				}
+				else
+				{
+					boolean withLearned =
+							((CheckBox)startFL.findViewById(R.id.withLearnedCB)).isChecked();
+					training(withLearned);
+				}
+			}
+		});
 	}
 
 	public void training(boolean withLearned)

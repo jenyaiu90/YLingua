@@ -23,6 +23,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import ru.jenyaiu90.ylingua.R;
+import ru.jenyaiu90.ylingua.adapter.MainFragmentPagerAdapter;
 import ru.jenyaiu90.ylingua.database.Database;
 import ru.jenyaiu90.ylingua.entity.Translation;
 
@@ -73,6 +74,15 @@ public class TrainingFragment extends Fragment
 		okIB = view.findViewById(R.id.okIB);
 		learnedCB = view.findViewById(R.id.learned1CB);
 		rightTV = view.findViewById(R.id.rightTV);
+
+		view.findViewById(R.id.closeIB).setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				fragment.load();
+			}
+		});
 
 		loadQuestion();
 
@@ -222,6 +232,14 @@ public class TrainingFragment extends Fragment
 				public void run()
 				{
 					Database.setTranslationLearned(getContext(), n, wordId, lang, false);
+					fragment.getActivity().runOnUiThread(new Runnable()
+					{
+						@Override
+						public void run()
+						{
+							MainFragmentPagerAdapter.getDictionaryFragment().loadWords();
+						}
+					});
 				}
 			}.start();
 		}
@@ -241,6 +259,14 @@ public class TrainingFragment extends Fragment
 						{
 							Database.setTranslationLearned(getContext(), n, wordId,
 									lang, true);
+							fragment.getActivity().runOnUiThread(new Runnable()
+							{
+								@Override
+								public void run()
+								{
+									MainFragmentPagerAdapter.getDictionaryFragment().loadWords();
+								}
+							});
 						}
 					}.start();
 				}

@@ -19,8 +19,11 @@ public class MainFragmentPagerAdapter extends FragmentPagerAdapter
 {
 	public static final int PAGES_COUNT = 2;
 	private static final int[] TITLES = { R.string.training, R.string.dictionary };
+
 	private static final DictionaryFragment dictionaryFragment = new DictionaryFragment();
-	private final MainFragment fragment;
+	private static StartFragment startFragment;
+
+	private static MainFragment fragment;
 
 	public MainFragmentPagerAdapter(FragmentManager manager, MainFragment fragment)
 	{
@@ -41,7 +44,7 @@ public class MainFragmentPagerAdapter extends FragmentPagerAdapter
 		switch (position)
 		{
 			case 0:
-				return new StartFragment(fragment);
+				return getStartFragment();
 			case 1:
 				Pair<String, String> langs = fragment.getLangs();
 				return getDictionaryFragment();
@@ -59,5 +62,14 @@ public class MainFragmentPagerAdapter extends FragmentPagerAdapter
 	public static DictionaryFragment getDictionaryFragment()
 	{
 		return dictionaryFragment;
+	}
+
+	public static StartFragment getStartFragment()
+	{
+		if (startFragment == null)
+		{
+			startFragment = new StartFragment(fragment);
+		}
+		return startFragment;
 	}
 }

@@ -99,6 +99,7 @@ public class MainFragment extends Fragment
 					lang2 = (String)parent.getItemAtPosition(position);
 				}
 
+				MainFragmentPagerAdapter.getStartFragment().load();
 				MainFragmentPagerAdapter.getDictionaryFragment().setLangs(new Pair<>(lang1, lang2));
 			}
 

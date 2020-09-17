@@ -103,7 +103,6 @@ public class MainActivity extends AppCompatActivity
 		if (lang1 == null || lang2 == null || lang1.equals(lang2))
 		{
 			Toast.makeText(MainActivity.this, R.string.chose_lang, Toast.LENGTH_LONG).show();
-			//ToDo: Переключиться на вкладку 1
 			loadFragment(new StartFragment(MainActivity.this), false);
 		}
 		else
