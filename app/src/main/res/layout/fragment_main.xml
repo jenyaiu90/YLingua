@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	xmlns:app="http://schemas.android.com/apk/res-auto">
+	
+	<ProgressBar
+		android:id="@+id/langPB"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+		android:indeterminate="true"
+		android:visibility="invisible"/>
+	
+	<Spinner
+		android:id="@+id/lang1SP"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		app:layout_constraintTop_toBottomOf="@id/langPB"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toStartOf="@id/lang2SP"/>
+	
+	<Spinner
+		android:id="@+id/lang2SP"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		app:layout_constraintTop_toTopOf="@id/lang1SP"
+		app:layout_constraintStart_toEndOf="@id/lang1SP"
+		app:layout_constraintEnd_toEndOf="parent"/>
+	
+	<androidx.constraintlayout.widget.Barrier
+		android:id="@+id/langsBR"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		app:barrierDirection="bottom"
+		app:constraint_referenced_ids="lang1SP,lang2SP"/>
+	
+	<com.google.android.material.tabs.TabLayout
+		android:id="@+id/modeTL"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		app:layout_constraintTop_toTopOf="@id/langsBR"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:tabMode="scrollable"/>
+	
+	<androidx.viewpager.widget.ViewPager
+		android:id="@+id/fragmentVP"
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		app:layout_constraintTop_toBottomOf="@id/modeTL"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"/>
+	
+</androidx.constraintlayout.widget.ConstraintLayout>

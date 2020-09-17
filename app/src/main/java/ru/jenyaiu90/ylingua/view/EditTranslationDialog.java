@@ -1,5 +1,6 @@
 package ru.jenyaiu90.ylingua.view;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -179,7 +180,7 @@ public class EditTranslationDialog extends DialogFragment
 
 					db.translations().update(translation);
 
-					getActivity().runOnUiThread(new Runnable()
+					fragment.getActivity().runOnUiThread(new Runnable()
 					{
 						@Override
 						public void run()
