@@ -19,6 +19,7 @@ public class MainFragmentPagerAdapter extends FragmentPagerAdapter
 {
 	public static final int PAGES_COUNT = 2;
 	private static final int[] TITLES = { R.string.training, R.string.dictionary };
+	private static final DictionaryFragment dictionaryFragment = new DictionaryFragment();
 	private final MainFragment fragment;
 
 	public MainFragmentPagerAdapter(FragmentManager manager, MainFragment fragment)
@@ -43,7 +44,7 @@ public class MainFragmentPagerAdapter extends FragmentPagerAdapter
 				return new StartFragment(fragment);
 			case 1:
 				Pair<String, String> langs = fragment.getLangs();
-				return new DictionaryFragment(langs.first, langs.second);
+				return getDictionaryFragment();
 			default:
 				throw new IndexOutOfBoundsException("There are only " + PAGES_COUNT + " pages.");
 		}
@@ -53,5 +54,10 @@ public class MainFragmentPagerAdapter extends FragmentPagerAdapter
 	public CharSequence getPageTitle(int position)
 	{
 		return fragment.getResources().getString(TITLES[position]);
+	}
+
+	public static DictionaryFragment getDictionaryFragment()
+	{
+		return dictionaryFragment;
 	}
 }

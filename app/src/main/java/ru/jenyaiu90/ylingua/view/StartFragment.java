@@ -18,6 +18,7 @@ import ru.jenyaiu90.ylingua.R;
 public class StartFragment extends Fragment
 {
 	private MainFragment fragment;
+	private FrameLayout startFL;
 
 	public StartFragment(MainFragment fragment)
 	{
@@ -35,8 +36,7 @@ public class StartFragment extends Fragment
 							 Bundle savedInstanceState)
 	{
 		final View view = inflater.inflate(R.layout.layout_start, container, false);
-
-
+		startFL = view.findViewById(R.id.startFL);
 
 		view.findViewById(R.id.startBT).setOnClickListener(new View.OnClickListener()
 		{
@@ -62,7 +62,7 @@ public class StartFragment extends Fragment
 
 	public void training(boolean withLearned)
 	{
-		FragmentTransaction transaction = getFragmentManager().beginTransaction();
+		FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
 		transaction.replace(R.id.startFL, new TrainingFragment(
 				StartFragment.this, fragment.getLangs(), withLearned));
 		transaction.commit();

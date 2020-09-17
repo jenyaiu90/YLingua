@@ -50,10 +50,6 @@ public class MainFragment extends Fragment
 		modeTL = view.findViewById(R.id.modeTL);
 		fragmentVP = view.findViewById(R.id.fragmentVP);
 
-		fragmentVP.setAdapter(new MainFragmentPagerAdapter(
-				getFragmentManager(), MainFragment.this));
-		modeTL.setupWithViewPager(fragmentVP);
-
 		langPB.setVisibility(View.VISIBLE);
 		new Thread()
 		{
@@ -85,6 +81,10 @@ public class MainFragment extends Fragment
 			}
 		}.start();
 
+		fragmentVP.setAdapter(new MainFragmentPagerAdapter(
+				getFragmentManager(), MainFragment.this));
+		modeTL.setupWithViewPager(fragmentVP);
+
 		AdapterView.OnItemSelectedListener spinnerLstn = new AdapterView.OnItemSelectedListener()
 		{
 			@Override
@@ -99,14 +99,7 @@ public class MainFragment extends Fragment
 					lang2 = (String)parent.getItemAtPosition(position);
 				}
 
-				if (modeTL.getSelectedTabPosition() == 0)
-				{
-					//ToDo: Перезапустить фрагмент тренировки
-				}
-				else
-				{
-					//ToDo: Перезапустить фрагмент словаря
-				}
+				MainFragmentPagerAdapter.getDictionaryFragment().setLangs(new Pair<>(lang1, lang2));
 			}
 
 			@Override
