@@ -52,7 +52,7 @@ public class DictionaryFragment extends Fragment
 			@Override
 			public void onClick(View v)
 			{
-				if (langs.first == null || langs.second == null || langs.first.equals(langs.second))
+				if (langs == null || langs.first == null || langs.second == null || langs.first.equals(langs.second))
 				{
 					Toast.makeText(getContext(), R.string.chose_lang, Toast.LENGTH_LONG).show();
 				}
