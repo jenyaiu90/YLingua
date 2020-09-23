@@ -31,15 +31,6 @@ public class EditLangFragment extends Fragment
 	private View view;
 	private ListView listLV;
 
-	private MainActivity activity;
-	private boolean isLangLoaded;
-
-	public EditLangFragment(MainActivity activity)
-	{
-		this.activity = activity;
-		isLangLoaded = false;
-	}
-
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
@@ -47,7 +38,8 @@ public class EditLangFragment extends Fragment
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+							 Bundle savedInstanceState)
 	{
 		final View view = inflater.inflate(R.layout.fragment_list, container, false);
 		this.view = view;
@@ -166,14 +158,6 @@ public class EditLangFragment extends Fragment
 							listLV.setAdapter(adapter);
 						}
 						loadingBP.setVisibility(View.INVISIBLE);
-						if (isLangLoaded)
-						{
-							activity.loadLang();
-						}
-						else
-						{
-							isLangLoaded = true;
-						}
 					}
 				});
 			}

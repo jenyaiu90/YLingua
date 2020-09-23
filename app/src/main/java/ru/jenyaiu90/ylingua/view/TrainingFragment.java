@@ -23,6 +23,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import ru.jenyaiu90.ylingua.R;
+import ru.jenyaiu90.ylingua.adapter.MainFragmentPagerAdapter;
 import ru.jenyaiu90.ylingua.database.Database;
 import ru.jenyaiu90.ylingua.entity.Translation;
 
@@ -32,7 +33,7 @@ public class TrainingFragment extends Fragment
 	private Pair<String, String> lang;
 	private View view;
 
-	private MainActivity activity;
+	private StartFragment fragment;
 
 	private ConstraintLayout trainingCL;
 	private TextView wordTV;
@@ -47,10 +48,10 @@ public class TrainingFragment extends Fragment
 	private LinkedList<String> translations;
 	private LinkedList<String> lowerTranslations;
 
-	public TrainingFragment(@NonNull MainActivity activity,
+	public TrainingFragment(@NonNull StartFragment fragment,
 							@NonNull Pair<String, String> lang, boolean withLearned)
 	{
-		this.activity = activity;
+		this.fragment = fragment;
 		this.withLearned = withLearned;
 		this.lang = lang;
 	}
@@ -73,6 +74,15 @@ public class TrainingFragment extends Fragment
 		okIB = view.findViewById(R.id.okIB);
 		learnedCB = view.findViewById(R.id.learned1CB);
 		rightTV = view.findViewById(R.id.rightTV);
+
+		view.findViewById(R.id.closeIB).setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				fragment.load();
+			}
+		});
 
 		loadQuestion();
 
@@ -222,6 +232,14 @@ public class TrainingFragment extends Fragment
 				public void run()
 				{
 					Database.setTranslationLearned(getContext(), n, wordId, lang, false);
+					fragment.getActivity().runOnUiThread(new Runnable()
+					{
+						@Override
+						public void run()
+						{
+							MainFragmentPagerAdapter.getDictionaryFragment().loadWords();
+						}
+					});
 				}
 			}.start();
 		}
@@ -241,10 +259,18 @@ public class TrainingFragment extends Fragment
 						{
 							Database.setTranslationLearned(getContext(), n, wordId,
 									lang, true);
+							fragment.getActivity().runOnUiThread(new Runnable()
+							{
+								@Override
+								public void run()
+								{
+									MainFragmentPagerAdapter.getDictionaryFragment().loadWords();
+								}
+							});
 						}
 					}.start();
 				}
-				activity.training(withLearned);
+				fragment.training(withLearned);
 			}
 		});
 	}
