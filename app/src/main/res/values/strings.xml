@@ -1,6 +1,19 @@
 <resources>
 	<string name="app_name">YLingua</string>
 	
+	<!-- Basic buttons -->
+	
+	<!-- Titles -->
+	
+	<!-- Buttons -->
+	<string name="edit_langs_bt">Edit languages</string>
+	<string name="training_bt">Training</string>
+	<string name="dictionary_bt">Dictionary</string>
+	<string name="themes_bt">Themes</string>
+	
+	<!-- Messages -->
+	
+	<!--
 	<string name="yes">Yes</string>
 	<string name="no">No</string>
 	<string name="back">Back</string>
@@ -33,5 +46,5 @@
 	<string name="translation_delete_sure">Are you sure you want to delete this?</string>
 	<string name="land_not_added">A language wasn`t added.</string>
 	<string name="no_words">There are no words to training. Go to dictionary and add them.</string>
-	<string name="error">Error.</string>
+	<string name="error">Error.</string> -->
 </resources>
