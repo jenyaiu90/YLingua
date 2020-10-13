@@ -4,6 +4,7 @@
 	<!-- Basic buttons -->
 	
 	<!-- Titles -->
+	<string name="add_lang_t">Add language</string>
 	
 	<!-- Buttons -->
 	<string name="options_bt">Options</string>
@@ -20,6 +21,8 @@
 	<!-- Messages -->
 	<string name="options_msg">Maybe one day there will be options here…</string>
 	<string name="themes_msg">Maybe one day there will be themes here…</string>
+	<string name="add_lang_no_name_msg">You need to enter language`s name and code to add it.</string>
+	<string name="add_lang_not_added_msg">Error: the language wasn`t added.</string>
 	
 	<!-- Hints -->
 	<string name="lang_code_h">EN</string>

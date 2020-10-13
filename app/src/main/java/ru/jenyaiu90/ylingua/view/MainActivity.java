@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.View;
@@ -75,7 +76,8 @@ public class MainActivity extends AppCompatActivity
 			@Override
 			public void onClick(View v)
 			{
-				//Todo: Go to OptionsActivity
+				Intent optionsI = new Intent(MainActivity.this, OptionsActivity.class);
+				startActivity(optionsI);
 			}
 		});
 
@@ -84,7 +86,7 @@ public class MainActivity extends AppCompatActivity
 			@Override
 			public void onClick(View v)
 			{
-				//Todo: Go to EditLanguagesActivity
+				// Todo: Go to EditLanguagesActivity
 			}
 		});
 
@@ -93,7 +95,7 @@ public class MainActivity extends AppCompatActivity
 			@Override
 			public void onClick(View v)
 			{
-				//Todo: Go to TrainingActivity
+				// Todo: Go to TrainingActivity
 			}
 		});
 
@@ -102,7 +104,7 @@ public class MainActivity extends AppCompatActivity
 			@Override
 			public void onClick(View v)
 			{
-				//Todo: Go to DictionaryActivity
+				// Todo: Go to DictionaryActivity
 			}
 		});
 
@@ -111,7 +113,8 @@ public class MainActivity extends AppCompatActivity
 			@Override
 			public void onClick(View v)
 			{
-				//Todo: Go to ThemesActivity
+				Intent themesI = new Intent(MainActivity.this, ThemesActivity.class);
+				startActivity(themesI);
 			}
 		});
 	}
