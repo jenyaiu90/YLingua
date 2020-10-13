@@ -86,7 +86,9 @@ public class MainActivity extends AppCompatActivity
 			@Override
 			public void onClick(View v)
 			{
-				// Todo: Go to EditLanguagesActivity
+				Intent editLanguagesI = new Intent(MainActivity.this,
+						EditLanguagesActivity.class);
+				startActivity(editLanguagesI);
 			}
 		});
 
@@ -104,7 +106,23 @@ public class MainActivity extends AppCompatActivity
 			@Override
 			public void onClick(View v)
 			{
-				// Todo: Go to DictionaryActivity
+				String lang1 = lang1SP.getSelectedItem().toString(),
+						lang2 = lang2SP.getSelectedItem().toString();
+				if (lang1.isEmpty() || lang2.isEmpty() || lang1.equals(lang2))
+				{
+					Toast.makeText(MainActivity.this, R.string.select_lang_wrong_msg,
+							Toast.LENGTH_LONG).show();
+				}
+				else
+				{
+					Intent dictionaryI = new Intent(MainActivity.this,
+							DictionaryActivity.class);
+					dictionaryI.putExtra(DictionaryActivity.LANG1,
+							lang1SP.getSelectedItem().toString());
+					dictionaryI.putExtra(DictionaryActivity.LANG2,
+							lang2SP.getSelectedItem().toString());
+					startActivity(dictionaryI);
+				}
 			}
 		});
 

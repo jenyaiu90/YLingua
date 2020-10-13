@@ -15,6 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.List;
 
@@ -23,7 +24,7 @@ import ru.jenyaiu90.ylingua.adapter.LanguagesAdapter;
 import ru.jenyaiu90.ylingua.database.Database;
 import ru.jenyaiu90.ylingua.entity.Language;
 
-public class EditLanguagesActivity extends Activity
+public class EditLanguagesActivity extends AppCompatActivity
 {
 	private Button addLangBT;
 	private ProgressBar editLangsPB;
@@ -76,6 +77,7 @@ public class EditLanguagesActivity extends Activity
 						.show();
 			}
 		});
+		loadLangs();
 	}
 
 	private void addLanguage(@NonNull final String code, @NonNull final String name)

@@ -23,6 +23,7 @@
 	<string name="themes_msg">Maybe one day there will be themes here…</string>
 	<string name="add_lang_no_name_msg">You need to enter language`s name and code to add it.</string>
 	<string name="add_lang_not_added_msg">Error: the language wasn`t added.</string>
+	<string name="select_lang_wrong_msg">You should chose two different languages.</string>
 	
 	<!-- Hints -->
 	<string name="lang_code_h">EN</string>
