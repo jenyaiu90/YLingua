@@ -6,12 +6,27 @@
 	<!-- Titles -->
 	
 	<!-- Buttons -->
+	<string name="options_bt">Options</string>
 	<string name="edit_langs_bt">Edit languages</string>
 	<string name="training_bt">Training</string>
 	<string name="dictionary_bt">Dictionary</string>
 	<string name="themes_bt">Themes</string>
 	
+	<string name="add_lang">Add language</string>
+	<string name="add_word">Add word</string>
+	
+	<string name="set_learned_bt">Set as learned</string>
+	
 	<!-- Messages -->
+	<string name="options_msg">Maybe one day there will be options here…</string>
+	<string name="themes_msg">Maybe one day there will be themes here…</string>
+	
+	<!-- Hints -->
+	<string name="lang_code_h">EN</string>
+	<string name="lang_name_h">English</string>
+	<string name="word1_h">The word</string>
+	<string name="word2_h">The translation</string>
+	<string name="translate_h">Enter the translation</string>
 	
 	<!--
 	<string name="yes">Yes</string>

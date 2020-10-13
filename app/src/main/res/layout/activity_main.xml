@@ -5,11 +5,22 @@
 	android:layout_height="match_parent"
 	xmlns:app="http://schemas.android.com/apk/res-auto">
 	
+	<ProgressBar
+		android:id="@+id/mainPB"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+		android:indeterminate="true"
+		android:visibility="invisible"/>
+	
 	<Spinner
 		android:id="@+id/lang1SP"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
-		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/mainPB"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintEnd_toStartOf="@id/optionsIB"/>
 	
@@ -17,16 +28,17 @@
 		android:id="@+id/optionsIB"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/mainPB"
 		app:layout_constraintStart_toEndOf="@id/lang1SP"
 		app:layout_constraintEnd_toStartOf="@id/lang2SP"
-		android:src="@android:drawable/ic_input_add"/>
+		android:src="@android:drawable/ic_input_add"
+		android:contentDescription="@string/options_bt"/>
 	
 	<Spinner
 		android:id="@+id/lang2SP"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
-		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/mainPB"
 		app:layout_constraintStart_toEndOf="@id/optionsIB"
 		app:layout_constraintEnd_toEndOf="parent"/>
 	
@@ -45,7 +57,8 @@
 		app:layout_constraintBottom_toTopOf="@id/dictionaryBT"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintEnd_toStartOf="@id/trainingBT"
-		android:src="@drawable/icon"/>
+		android:src="@drawable/icon"
+		android:contentDescription="@string/edit_langs_bt"/>
 	
 	<TextView
 		android:id="@+id/langsTV"
@@ -67,7 +80,8 @@
 		app:layout_constraintBottom_toTopOf="@id/themesBT"
 		app:layout_constraintStart_toEndOf="@id/langsBT"
 		app:layout_constraintEnd_toEndOf="parent"
-		android:src="@drawable/icon"/>
+		android:src="@drawable/icon"
+		android:contentDescription="@string/training_bt"/>
 	
 	<TextView
 		android:id="@+id/trainingTV"
@@ -89,7 +103,8 @@
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintEnd_toStartOf="@id/themesBT"
-		android:src="@drawable/icon"/>
+		android:src="@drawable/icon"
+		android:contentDescription="@string/dictionary_bt"/>
 	
 	<TextView
 		android:id="@+id/dictionaryTV"
@@ -111,7 +126,8 @@
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintStart_toEndOf="@id/dictionaryBT"
 		app:layout_constraintEnd_toEndOf="parent"
-		android:src="@drawable/icon"/>
+		android:src="@drawable/icon"
+		android:contentDescription="@string/themes_bt"/>
 	
 	<TextView
 		android:id="@+id/themesTV"

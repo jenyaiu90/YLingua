@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
-	android:id="@+id/trainingCL"
 	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/trainingCL"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -9,15 +9,30 @@
 	android:layout_margin="16dp"
 	android:background="@drawable/neutral_card">
 	
-	<ImageButton
-		android:id="@+id/closeIB"
-		android:layout_width="wrap_content"
+	<TextView
+		android:id="@+id/lang1TV"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toStartOf="@id/lang2TV"
+		android:layout_marginTop="32dp"
+		android:layout_marginStart="8dp"
+		tool:text="L1"
+		style="@style/TextAppearance.MaterialComponents.Headline4"/>
+	
+	<TextView
+		android:id="@+id/lang2TV"
+		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		app:layout_constraintTop_toTopOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
-		android:layout_marginTop="16dp"
-		android:layout_marginEnd="16dp"
-		android:src="@android:drawable/ic_menu_close_clear_cancel"/>
+		app:layout_constraintStart_toEndOf="@id/lang1TV"
+		android:layout_marginTop="32dp"
+		android:layout_marginEnd="8dp"
+		tool:text="L2"
+		style="@style/TextAppearance.MaterialComponents.Headline4"
+		android:textAlignment="textEnd"/>
 	
 	<TextView
 		android:id="@+id/rightTV"
@@ -86,7 +101,9 @@
 		app:layout_constraintStart_toEndOf="@id/beginGL"
 		app:layout_constraintEnd_toStartOf="@id/endGL"
 		android:textAlignment="center"
-		android:hint="@string/translate"/>
+		android:inputType="text"
+		android:hint="@string/translate_h"
+		android:autofillHints="no"/>
 	
 	<ImageButton
 		android:id="@+id/okIB"
@@ -101,13 +118,13 @@
 		android:contentDescription="@string/answer"/>
 	
 	<CheckBox
-		android:id="@+id/learned1CB"
+		android:id="@+id/learnedCB"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		app:layout_constraintTop_toBottomOf="@id/translationET"
 		app:layout_constraintStart_toEndOf="@id/beginGL"
 		app:layout_constraintEnd_toStartOf="@id/endGL"
-		android:text="@string/set_learned"
+		android:text="@string/set_learned_bt"
 		android:enabled="false"
 		android:visibility="invisible"/>
 
