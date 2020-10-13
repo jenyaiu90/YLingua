@@ -50,13 +50,13 @@
 		app:constraint_referenced_ids="lang1SP,optionsIB,lang2SP"/>
 	
 	<ImageButton
-		android:id="@+id/langsBT"
+		android:id="@+id/langsIB"
 		android:layout_width="0dp"
 		android:layout_height="0dp"
 		app:layout_constraintTop_toBottomOf="@id/langsBR"
-		app:layout_constraintBottom_toTopOf="@id/dictionaryBT"
+		app:layout_constraintBottom_toTopOf="@id/dictionaryIB"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintEnd_toStartOf="@id/trainingBT"
+		app:layout_constraintEnd_toStartOf="@id/trainingIB"
 		android:src="@drawable/icon"
 		android:contentDescription="@string/edit_langs_bt"/>
 	
@@ -64,21 +64,21 @@
 		android:id="@+id/langsTV"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
-		app:layout_constraintBottom_toBottomOf="@id/langsBT"
-		app:layout_constraintStart_toStartOf="@id/langsBT"
-		app:layout_constraintEnd_toEndOf="@id/langsBT"
+		app:layout_constraintBottom_toBottomOf="@id/langsIB"
+		app:layout_constraintStart_toStartOf="@id/langsIB"
+		app:layout_constraintEnd_toEndOf="@id/langsIB"
 		style="@style/TextAppearance.AppCompat.Headline"
 		android:textAlignment="center"
 		android:padding="10dp"
 		android:text="@string/edit_langs_bt"/>
 	
 	<ImageButton
-		android:id="@+id/trainingBT"
+		android:id="@+id/trainingIB"
 		android:layout_width="0dp"
 		android:layout_height="0dp"
 		app:layout_constraintTop_toBottomOf="@id/langsBR"
-		app:layout_constraintBottom_toTopOf="@id/themesBT"
-		app:layout_constraintStart_toEndOf="@id/langsBT"
+		app:layout_constraintBottom_toTopOf="@id/themesIB"
+		app:layout_constraintStart_toEndOf="@id/langsIB"
 		app:layout_constraintEnd_toEndOf="parent"
 		android:src="@drawable/icon"
 		android:contentDescription="@string/training_bt"/>
@@ -87,22 +87,22 @@
 		android:id="@+id/trainingTV"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
-		app:layout_constraintBottom_toBottomOf="@id/trainingBT"
-		app:layout_constraintStart_toStartOf="@id/trainingBT"
-		app:layout_constraintEnd_toEndOf="@id/trainingBT"
+		app:layout_constraintBottom_toBottomOf="@id/trainingIB"
+		app:layout_constraintStart_toStartOf="@id/trainingIB"
+		app:layout_constraintEnd_toEndOf="@id/trainingIB"
 		style="@style/TextAppearance.AppCompat.Headline"
 		android:textAlignment="center"
 		android:padding="10dp"
 		android:text="@string/training_bt"/>
 	
 	<ImageButton
-		android:id="@+id/dictionaryBT"
+		android:id="@+id/dictionaryIB"
 		android:layout_width="0dp"
 		android:layout_height="0dp"
-		app:layout_constraintTop_toBottomOf="@id/langsBT"
+		app:layout_constraintTop_toBottomOf="@id/langsIB"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintEnd_toStartOf="@id/themesBT"
+		app:layout_constraintEnd_toStartOf="@id/themesIB"
 		android:src="@drawable/icon"
 		android:contentDescription="@string/dictionary_bt"/>
 	
@@ -110,21 +110,21 @@
 		android:id="@+id/dictionaryTV"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
-		app:layout_constraintBottom_toBottomOf="@id/dictionaryBT"
-		app:layout_constraintStart_toStartOf="@id/dictionaryBT"
-		app:layout_constraintEnd_toEndOf="@id/dictionaryBT"
+		app:layout_constraintBottom_toBottomOf="@id/dictionaryIB"
+		app:layout_constraintStart_toStartOf="@id/dictionaryIB"
+		app:layout_constraintEnd_toEndOf="@id/dictionaryIB"
 		style="@style/TextAppearance.AppCompat.Headline"
 		android:textAlignment="center"
 		android:padding="10dp"
 		android:text="@string/dictionary_bt"/>
 	
 	<ImageButton
-		android:id="@+id/themesBT"
+		android:id="@+id/themesIB"
 		android:layout_width="0dp"
 		android:layout_height="0dp"
-		app:layout_constraintTop_toBottomOf="@id/trainingBT"
+		app:layout_constraintTop_toBottomOf="@id/trainingIB"
 		app:layout_constraintBottom_toBottomOf="parent"
-		app:layout_constraintStart_toEndOf="@id/dictionaryBT"
+		app:layout_constraintStart_toEndOf="@id/dictionaryIB"
 		app:layout_constraintEnd_toEndOf="parent"
 		android:src="@drawable/icon"
 		android:contentDescription="@string/themes_bt"/>
@@ -133,9 +133,9 @@
 		android:id="@+id/themesTV"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
-		app:layout_constraintBottom_toBottomOf="@id/themesBT"
-		app:layout_constraintStart_toStartOf="@id/themesBT"
-		app:layout_constraintEnd_toEndOf="@id/themesBT"
+		app:layout_constraintBottom_toBottomOf="@id/themesIB"
+		app:layout_constraintStart_toStartOf="@id/themesIB"
+		app:layout_constraintEnd_toEndOf="@id/themesIB"
 		style="@style/TextAppearance.AppCompat.Headline"
 		android:textAlignment="center"
 		android:padding="10dp"
