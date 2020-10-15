@@ -23,7 +23,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import ru.jenyaiu90.ylingua.R;
-import ru.jenyaiu90.ylingua.adapter.MainFragmentPagerAdapter;
 import ru.jenyaiu90.ylingua.database.Database;
 import ru.jenyaiu90.ylingua.entity.Translation;
 
@@ -33,7 +32,7 @@ public class TrainingFragment extends Fragment
 	private Pair<String, String> lang;
 	private View view;
 
-	private StartFragment fragment;
+	private TrainingActivity activity;
 
 	private ConstraintLayout trainingCL;
 	private TextView wordTV;
@@ -48,10 +47,10 @@ public class TrainingFragment extends Fragment
 	private LinkedList<String> translations;
 	private LinkedList<String> lowerTranslations;
 
-	public TrainingFragment(@NonNull StartFragment fragment,
+	public TrainingFragment(@NonNull TrainingActivity activity,
 							@NonNull Pair<String, String> lang, boolean withLearned)
 	{
-		this.fragment = fragment;
+		this.activity = activity;
 		this.withLearned = withLearned;
 		this.lang = lang;
 	}
@@ -74,15 +73,6 @@ public class TrainingFragment extends Fragment
 		okIB = view.findViewById(R.id.okIB);
 		learnedCB = view.findViewById(R.id.learned1CB);
 		rightTV = view.findViewById(R.id.rightTV);
-
-		view.findViewById(R.id.closeIB).setOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View v)
-			{
-				fragment.load();
-			}
-		});
 
 		loadQuestion();
 
@@ -132,12 +122,12 @@ public class TrainingFragment extends Fragment
 						{
 							trainingCL.setBackground(
 									getResources().getDrawable(R.drawable.bad_card));
-							wordTV.setText(R.string.error);
+							wordTV.setText(R.string.error_t);
 							wordTV.setTextColor(Color.GRAY);
 							translationET.setEnabled(false);
 							okIB.setEnabled(false);
 							wordPB.setVisibility(View.INVISIBLE);
-							Toast.makeText(getContext(), R.string.no_words, Toast.LENGTH_LONG)
+							Toast.makeText(getContext(), R.string.no_words_msg, Toast.LENGTH_LONG)
 									.show();
 						}
 					});
@@ -226,13 +216,14 @@ public class TrainingFragment extends Fragment
 					.getDrawable(R.drawable.false_card));
 			rightTV.setText(makeRight(translations));
 			rightTV.setVisibility(View.VISIBLE);
+			/*
 			new Thread()
 			{
 				@Override
 				public void run()
 				{
 					Database.setTranslationLearned(getContext(), n, wordId, lang, false);
-					fragment.getActivity().runOnUiThread(new Runnable()
+					activity.runOnUiThread(new Runnable()
 					{
 						@Override
 						public void run()
@@ -242,6 +233,7 @@ public class TrainingFragment extends Fragment
 					});
 				}
 			}.start();
+			*/
 		}
 		translationET.setEnabled(false);
 		okIB.setContentDescription(getResources().getString(R.string.next));
@@ -259,7 +251,8 @@ public class TrainingFragment extends Fragment
 						{
 							Database.setTranslationLearned(getContext(), n, wordId,
 									lang, true);
-							fragment.getActivity().runOnUiThread(new Runnable()
+							/*
+							activity.runOnUiThread(new Runnable()
 							{
 								@Override
 								public void run()
@@ -267,10 +260,11 @@ public class TrainingFragment extends Fragment
 									MainFragmentPagerAdapter.getDictionaryFragment().loadWords();
 								}
 							});
+							 */
 						}
 					}.start();
 				}
-				fragment.training(withLearned);
+				activity.training();
 			}
 		});
 	}

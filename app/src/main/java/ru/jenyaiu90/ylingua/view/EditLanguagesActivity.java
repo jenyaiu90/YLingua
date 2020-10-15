@@ -101,7 +101,7 @@ public class EditLanguagesActivity extends AppCompatActivity
 						public void run()
 						{
 							Toast.makeText(EditLanguagesActivity.this,
-									R.string.land_not_added,
+									R.string.add_lang_not_added_msg,
 									Toast.LENGTH_LONG).show();
 						}
 					});
@@ -122,7 +122,7 @@ public class EditLanguagesActivity extends AppCompatActivity
 		loadLangs();
 	}
 
-	private void loadLangs()
+	public void loadLangs()
 	{
 		editLangsPB.setVisibility(View.VISIBLE);
 		new Thread()
@@ -134,7 +134,8 @@ public class EditLanguagesActivity extends AppCompatActivity
 						.languages().getAll();
 				Language[] array = new Language[list.size()];
 				list.toArray(array);
-				final LanguagesAdapter adapter = new LanguagesAdapter(array);
+				final LanguagesAdapter adapter =
+						new LanguagesAdapter(EditLanguagesActivity.this, array);
 				EditLanguagesActivity.this.runOnUiThread(new Runnable()
 				{
 					@Override

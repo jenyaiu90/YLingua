@@ -2,9 +2,18 @@
 	<string name="app_name">YLingua</string>
 	
 	<!-- Basic buttons -->
+	<string name="yes">Yes</string>
+	<string name="no">No</string>
+	<string name="delete">Delete</string>
+	<string name="add">Add</string>
+	<string name="save">Save</string>
+	<string name="cancel">Cancel</string>
+	<string name="next">Next</string>
 	
 	<!-- Titles -->
 	<string name="add_lang_t">Add language</string>
+	<string name="edit_translation_t">Edit translation</string>
+	<string name="error_t">Error</string>
 	
 	<!-- Buttons -->
 	<string name="options_bt">Options</string>
@@ -12,6 +21,7 @@
 	<string name="training_bt">Training</string>
 	<string name="dictionary_bt">Dictionary</string>
 	<string name="themes_bt">Themes</string>
+	<string name="with_learned_bt">With learned</string>
 	
 	<string name="add_lang">Add language</string>
 	<string name="add_word">Add word</string>
@@ -24,6 +34,10 @@
 	<string name="add_lang_no_name_msg">You need to enter language`s name and code to add it.</string>
 	<string name="add_lang_not_added_msg">Error: the language wasn`t added.</string>
 	<string name="select_lang_wrong_msg">You should chose two different languages.</string>
+	<string name="enter_words_msg">You should enter word and its translation.</string>
+	<string name="translation_delete_sure_msg">Are you sure you want to delete this word?</string>
+	<string name="lang_delete_sure_msg">Are you sure you want to delete this language? This will also delete all words in this language from the dictionary.</string>
+	<string name="no_words_msg">There are no words to training. Go to dictionary and add them.</string>
 	
 	<!-- Hints -->
 	<string name="lang_code_h">EN</string>
@@ -31,6 +45,7 @@
 	<string name="word1_h">The word</string>
 	<string name="word2_h">The translation</string>
 	<string name="translate_h">Enter the translation</string>
+	<string name="answer_h">Answer</string>
 	
 	<!--
 	<string name="yes">Yes</string>

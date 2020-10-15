@@ -24,7 +24,7 @@ public class DictionaryActivity extends AppCompatActivity
 	public static final String LANG2 = "lang_2";
 
 	private Button addWordBT;
-	private ProgressBar dictionaryPB;
+	public ProgressBar dictionaryPB;
 	private ListView wordsListLV;
 
 	private Pair<String, String> langs;
@@ -47,22 +47,16 @@ public class DictionaryActivity extends AppCompatActivity
 			public void onClick(View v)
 			{
 				EditTranslationDialog dialog = new EditTranslationDialog(
-						null, langs, new Runnable()
-				{
-					@Override
-					public void run()
-					{
-						loadWords();
-					}
-				});
+						null, langs, DictionaryActivity.this);
 				dialog.show(getSupportFragmentManager(), null);
 			}
 		});
 		loadWords();
 	}
 
-	private void loadWords()
+	public void loadWords()
 	{
+
 		dictionaryPB.setVisibility(View.VISIBLE);
 		new Thread()
 		{
@@ -73,7 +67,8 @@ public class DictionaryActivity extends AppCompatActivity
 						.getForLang(langs.first, langs.second);
 				Translation[] array = new Translation[list.size()];
 				list.toArray(array);
-				final DictionaryAdapter adapter = new DictionaryAdapter(array, langs);
+				final DictionaryAdapter adapter =
+						new DictionaryAdapter(DictionaryActivity.this, array, langs);
 				DictionaryActivity.this.runOnUiThread(new Runnable()
 				{
 					@Override

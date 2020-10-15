@@ -1,31 +1,20 @@
 package ru.jenyaiu90.ylingua.view;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Pair;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.FrameLayout;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
-import android.widget.RadioButton;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.Toast;
-
-import com.google.android.material.tabs.TabLayout;
 
 import java.util.List;
 
 import ru.jenyaiu90.ylingua.R;
-import ru.jenyaiu90.ylingua.adapter.MainFragmentPagerAdapter;
 import ru.jenyaiu90.ylingua.database.Database;
 import ru.jenyaiu90.ylingua.entity.Language;
 
@@ -34,6 +23,7 @@ public class MainActivity extends AppCompatActivity
 	private ProgressBar mainPB;
 	private Spinner lang1SP, lang2SP;
 	private ImageButton optionsIB, langsIB, trainingIB, dictionaryIB, themesIB;
+	private CheckBox learnedCB;
 
 	private int easterCounter = 0;
 
@@ -51,6 +41,7 @@ public class MainActivity extends AppCompatActivity
 		trainingIB = findViewById(R.id.trainingIB);
 		dictionaryIB = findViewById(R.id.dictionaryIB);
 		themesIB = findViewById(R.id.themesIB);
+		learnedCB = findViewById(R.id.learnedCB);
 
 		setLangs();
 
@@ -97,7 +88,27 @@ public class MainActivity extends AppCompatActivity
 			@Override
 			public void onClick(View v)
 			{
-				// Todo: Go to TrainingActivity
+				String  lang1 = lang1SP.getSelectedItem() == null ? "" :
+								lang1SP.getSelectedItem().toString(),
+						lang2 = lang2SP.getSelectedItem() == null ? "" :
+								lang2SP.getSelectedItem().toString();
+				if (lang1.isEmpty() || lang2.isEmpty() || lang1.equals(lang2))
+				{
+					Toast.makeText(MainActivity.this, R.string.select_lang_wrong_msg,
+							Toast.LENGTH_LONG).show();
+				}
+				else
+				{
+					Intent trainingI = new Intent(MainActivity.this,
+							TrainingActivity.class);
+					trainingI.putExtra(DictionaryActivity.LANG1,
+							lang1SP.getSelectedItem().toString());
+					trainingI.putExtra(DictionaryActivity.LANG2,
+							lang2SP.getSelectedItem().toString());
+					trainingI.putExtra(TrainingActivity.LEARNED,
+							learnedCB.isChecked());
+					startActivity(trainingI);
+				}
 			}
 		});
 
@@ -106,8 +117,10 @@ public class MainActivity extends AppCompatActivity
 			@Override
 			public void onClick(View v)
 			{
-				String lang1 = lang1SP.getSelectedItem().toString(),
-						lang2 = lang2SP.getSelectedItem().toString();
+				String  lang1 = lang1SP.getSelectedItem() == null ? "" :
+								lang1SP.getSelectedItem().toString(),
+						lang2 = lang2SP.getSelectedItem() == null ? "" :
+								lang2SP.getSelectedItem().toString();
 				if (lang1.isEmpty() || lang2.isEmpty() || lang1.equals(lang2))
 				{
 					Toast.makeText(MainActivity.this, R.string.select_lang_wrong_msg,

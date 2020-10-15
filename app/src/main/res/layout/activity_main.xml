@@ -77,7 +77,7 @@
 		android:layout_width="0dp"
 		android:layout_height="0dp"
 		app:layout_constraintTop_toBottomOf="@id/langsBR"
-		app:layout_constraintBottom_toTopOf="@id/themesIB"
+		app:layout_constraintBottom_toTopOf="@id/learnedCB"
 		app:layout_constraintStart_toEndOf="@id/langsIB"
 		app:layout_constraintEnd_toEndOf="parent"
 		android:src="@drawable/icon"
@@ -94,6 +94,16 @@
 		android:textAlignment="center"
 		android:padding="10dp"
 		android:text="@string/training_bt"/>
+	
+	<CheckBox
+		android:id="@+id/learnedCB"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		app:layout_constraintTop_toBottomOf="@id/trainingIB"
+		app:layout_constraintBottom_toBottomOf="@id/langsIB"
+		app:layout_constraintStart_toStartOf="@id/trainingIB"
+		app:layout_constraintEnd_toEndOf="@id/trainingIB"
+		android:text="@string/with_learned_bt"/>
 	
 	<ImageButton
 		android:id="@+id/dictionaryIB"
@@ -122,7 +132,7 @@
 		android:id="@+id/themesIB"
 		android:layout_width="0dp"
 		android:layout_height="0dp"
-		app:layout_constraintTop_toBottomOf="@id/trainingIB"
+		app:layout_constraintTop_toBottomOf="@id/learnedCB"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintStart_toEndOf="@id/dictionaryIB"
 		app:layout_constraintEnd_toEndOf="parent"

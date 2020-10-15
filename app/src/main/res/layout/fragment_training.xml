@@ -115,7 +115,7 @@
 		app:layout_constraintEnd_toEndOf="parent"
 		android:src="@android:drawable/ic_menu_send"
 		android:tint="@android:color/holo_blue_dark"
-		android:contentDescription="@string/answer"/>
+		android:contentDescription="@string/answer_h"/>
 	
 	<CheckBox
 		android:id="@+id/learnedCB"
