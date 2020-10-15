@@ -23,8 +23,8 @@
 	<string name="themes_bt">Themes</string>
 	<string name="with_learned_bt">With learned</string>
 	
-	<string name="add_lang">Add language</string>
-	<string name="add_word">Add word</string>
+	<string name="add_lang_bt">Add language</string>
+	<string name="add_word_bt">Add word</string>
 	
 	<string name="set_learned_bt">Set as learned</string>
 	
@@ -38,6 +38,7 @@
 	<string name="translation_delete_sure_msg">Are you sure you want to delete this word?</string>
 	<string name="lang_delete_sure_msg">Are you sure you want to delete this language? This will also delete all words in this language from the dictionary.</string>
 	<string name="no_words_msg">There are no words to training. Go to dictionary and add them.</string>
+	<string name="no_unlearned_msg">You have learned all the words! Let`s repeated them!</string>
 	
 	<!-- Hints -->
 	<string name="lang_code_h">EN</string>

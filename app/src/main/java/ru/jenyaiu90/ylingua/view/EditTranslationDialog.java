@@ -68,7 +68,7 @@ public class EditTranslationDialog extends DialogFragment
 					Words words = Database.get(getContext()).words();
 					word1 = words.getById(translation.getWord1()).getWord();
 					word2 = words.getById(translation.getWord2()).getWord();
-					getActivity().runOnUiThread(new Runnable()
+					activity.runOnUiThread(new Runnable()
 					{
 						@Override
 						public void run()
@@ -180,7 +180,7 @@ public class EditTranslationDialog extends DialogFragment
 
 					db.translations().update(translation);
 
-					getActivity().runOnUiThread(new Runnable()
+					activity.runOnUiThread(new Runnable()
 					{
 						@Override
 						public void run()
@@ -239,7 +239,7 @@ public class EditTranslationDialog extends DialogFragment
 						db.translations().insert(translation);
 					}
 
-					getActivity().runOnUiThread(new Runnable()
+					activity.runOnUiThread(new Runnable()
 					{
 						@Override
 						public void run()

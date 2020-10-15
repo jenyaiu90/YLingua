@@ -71,7 +71,7 @@ public class TrainingFragment extends Fragment
 		wordPB = view.findViewById(R.id.wordPB);
 		translationET = view.findViewById(R.id.translationET);
 		okIB = view.findViewById(R.id.okIB);
-		learnedCB = view.findViewById(R.id.learned1CB);
+		learnedCB = view.findViewById(R.id.learnedCB);
 		rightTV = view.findViewById(R.id.rightTV);
 
 		loadQuestion();
@@ -111,6 +111,18 @@ public class TrainingFragment extends Fragment
 					if (translationList.isEmpty())
 					{
 						translationList = db.translations().getForLang(lang.first, lang.second);
+						if (!translationList.isEmpty())
+						{
+							getActivity().runOnUiThread(new Runnable()
+							{
+								@Override
+								public void run()
+								{
+									Toast.makeText(getContext(), R.string.no_unlearned_msg,
+										Toast.LENGTH_LONG).show();
+								}
+							});
+						}
 					}
 				}
 				if (translationList.isEmpty())
@@ -216,24 +228,14 @@ public class TrainingFragment extends Fragment
 					.getDrawable(R.drawable.false_card));
 			rightTV.setText(makeRight(translations));
 			rightTV.setVisibility(View.VISIBLE);
-			/*
 			new Thread()
 			{
 				@Override
 				public void run()
 				{
 					Database.setTranslationLearned(getContext(), n, wordId, lang, false);
-					activity.runOnUiThread(new Runnable()
-					{
-						@Override
-						public void run()
-						{
-							MainFragmentPagerAdapter.getDictionaryFragment().loadWords();
-						}
-					});
 				}
 			}.start();
-			*/
 		}
 		translationET.setEnabled(false);
 		okIB.setContentDescription(getResources().getString(R.string.next));
@@ -251,16 +253,6 @@ public class TrainingFragment extends Fragment
 						{
 							Database.setTranslationLearned(getContext(), n, wordId,
 									lang, true);
-							/*
-							activity.runOnUiThread(new Runnable()
-							{
-								@Override
-								public void run()
-								{
-									MainFragmentPagerAdapter.getDictionaryFragment().loadWords();
-								}
-							});
-							 */
 						}
 					}.start();
 				}

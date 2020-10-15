@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity
 	private ImageButton optionsIB, langsIB, trainingIB, dictionaryIB, themesIB;
 	private CheckBox learnedCB;
 
+	private boolean needToBeReloaded;
+
 	private int easterCounter = 0;
 
 	@Override
@@ -32,6 +34,8 @@ public class MainActivity extends AppCompatActivity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
+		needToBeReloaded = false;
 
 		mainPB = findViewById(R.id.mainPB);
 		lang1SP = findViewById(R.id.lang1SP);
@@ -77,6 +81,7 @@ public class MainActivity extends AppCompatActivity
 			@Override
 			public void onClick(View v)
 			{
+				needToBeReloaded = true;
 				Intent editLanguagesI = new Intent(MainActivity.this,
 						EditLanguagesActivity.class);
 				startActivity(editLanguagesI);
@@ -180,34 +185,16 @@ public class MainActivity extends AppCompatActivity
 				});
 			}
 		}.start();
+	}
 
-		/* DELETE if lang1SP.getSelectedItem().toString() will word
-
-		AdapterView.OnItemSelectedListener spinnerLstn = new AdapterView.OnItemSelectedListener()
+	@Override
+	public void onResume()
+	{
+		super.onResume();
+		if (needToBeReloaded)
 		{
-			@Override
-			public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-			{
-				if (parent == lang1SP)
-				{
-					lang1 = (String)parent.getItemAtPosition(position);
-				}
-				else
-				{
-					lang2 = (String)parent.getItemAtPosition(position);
-				}
-
-				MainFragmentPagerAdapter.getStartFragment().load();
-				MainFragmentPagerAdapter.getDictionaryFragment().setLangs(new Pair<>(lang1, lang2));
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> parent)
-			{
-
-			}
-		};
-		lang1SP.setOnItemSelectedListener(spinnerLstn);
-		lang2SP.setOnItemSelectedListener(spinnerLstn);*/
+			setLangs();
+			needToBeReloaded = false;
+		}
 	}
 }

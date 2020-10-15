@@ -1,11 +1,9 @@
 package ru.jenyaiu90.ylingua.view;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -48,7 +46,7 @@ public class EditLanguagesActivity extends AppCompatActivity
 				final View dialogView = LayoutInflater.from(EditLanguagesActivity.this).
 						inflate(R.layout.dialog_add_lang, null);
 				new AlertDialog.Builder(EditLanguagesActivity.this)
-						.setTitle(R.string.add_lang)
+						.setTitle(R.string.add_lang_bt)
 						.setView(dialogView)
 						.setPositiveButton(R.string.add, new DialogInterface.OnClickListener()
 						{
@@ -114,12 +112,12 @@ public class EditLanguagesActivity extends AppCompatActivity
 						public void run()
 						{
 							editLangsPB.setVisibility(View.INVISIBLE);
+							loadLangs();
 						}
 					});
 				}
 			}
 		}.start();
-		loadLangs();
 	}
 
 	public void loadLangs()
