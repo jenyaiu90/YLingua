@@ -31,18 +31,18 @@ public class EditTranslationDialog extends DialogFragment
 	private Pair<String, String> lang;
 	private View view;
 
-	private DictionaryFragment fragment;
+	DictionaryActivity activity;
 
 	private EditText word1ET, word2ET;
 	private ProgressBar translationPB;
 
 	public EditTranslationDialog(@Nullable Translation translation,
 								 @NonNull Pair<String, String> lang,
-								 @NonNull DictionaryFragment fragment)
+								 @NonNull DictionaryActivity activity)
 	{
 		this.translation = translation;
 		this.lang = lang;
-		this.fragment = fragment;
+		this.activity = activity;
 	}
 
 	@Override
@@ -55,7 +55,7 @@ public class EditTranslationDialog extends DialogFragment
 		((TextView)view.findViewById(R.id.lang2TV)).setText(lang.second);
 		word1ET = view.findViewById(R.id.word1ET);
 		word2ET = view.findViewById(R.id.word2ET);
-		translationPB = view.findViewById(R.id.translationPB);
+		translationPB = view.findViewById(R.id.editTranslationPB);
 		if (translation != null)
 		{
 			translationPB.setVisibility(View.VISIBLE);
@@ -68,7 +68,7 @@ public class EditTranslationDialog extends DialogFragment
 					Words words = Database.get(getContext()).words();
 					word1 = words.getById(translation.getWord1()).getWord();
 					word2 = words.getById(translation.getWord2()).getWord();
-					getActivity().runOnUiThread(new Runnable()
+					activity.runOnUiThread(new Runnable()
 					{
 						@Override
 						public void run()
@@ -82,7 +82,7 @@ public class EditTranslationDialog extends DialogFragment
 			}.start();
 		}
 		return new AlertDialog.Builder(getContext())
-				.setTitle(R.string.edit_translation)
+				.setTitle(R.string.edit_translation_t)
 				.setView(view)
 				.setPositiveButton(R.string.save, new DialogInterface.OnClickListener()
 				{
@@ -97,8 +97,8 @@ public class EditTranslationDialog extends DialogFragment
 						}
 						else
 						{
-							Toast.makeText(getContext(), R.string.enter_words, Toast.LENGTH_LONG)
-									.show();
+							Toast.makeText(getContext(), R.string.enter_words_msg,
+									Toast.LENGTH_LONG).show();
 						}
 					}
 				})
@@ -109,7 +109,7 @@ public class EditTranslationDialog extends DialogFragment
 					public void onClick(DialogInterface dialog, int which)
 					{
 						new AlertDialog.Builder(getContext())
-								.setMessage(R.string.translation_delete_sure)
+								.setMessage(R.string.translation_delete_sure_msg)
 								.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener()
 								{
 									@Override
@@ -180,13 +180,13 @@ public class EditTranslationDialog extends DialogFragment
 
 					db.translations().update(translation);
 
-					fragment.getActivity().runOnUiThread(new Runnable()
+					activity.runOnUiThread(new Runnable()
 					{
 						@Override
 						public void run()
 						{
 							translationPB.setVisibility(View.INVISIBLE);
-							fragment.loadWords();
+							activity.loadWords();
 						}
 					});
 				}
@@ -239,13 +239,13 @@ public class EditTranslationDialog extends DialogFragment
 						db.translations().insert(translation);
 					}
 
-					fragment.getActivity().runOnUiThread(new Runnable()
+					activity.runOnUiThread(new Runnable()
 					{
 						@Override
 						public void run()
 						{
 							translationPB.setVisibility(View.INVISIBLE);
-							fragment.loadWords();
+							activity.loadWords();
 						}
 					});
 				}
@@ -262,13 +262,13 @@ public class EditTranslationDialog extends DialogFragment
 			public void run()
 			{
 				Database.get(getContext()).translations().delete(translation);
-				fragment.getActivity().runOnUiThread(new Runnable()
+				getActivity().runOnUiThread(new Runnable()
 				{
 					@Override
 					public void run()
 					{
 						translationPB.setVisibility(View.INVISIBLE);
-						fragment.loadWords();
+						activity.loadWords();
 					}
 				});
 			}

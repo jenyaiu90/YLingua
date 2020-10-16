@@ -5,21 +5,149 @@
 	android:layout_height="match_parent"
 	xmlns:app="http://schemas.android.com/apk/res-auto">
 	
-	<Button
-		android:id="@+id/editLangBT"
+	<ProgressBar
+		android:id="@+id/mainPB"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		app:layout_constraintTop_toTopOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
-		android:text="@string/edit_lang"/>
+		style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+		android:indeterminate="true"
+		android:visibility="invisible"/>
 	
-	<FrameLayout
-		android:id="@+id/mainFL"
+	<Spinner
+		android:id="@+id/lang1SP"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		app:layout_constraintTop_toBottomOf="@id/mainPB"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toStartOf="@id/optionsIB"/>
+	
+	<ImageButton
+		android:id="@+id/optionsIB"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		app:layout_constraintTop_toBottomOf="@id/mainPB"
+		app:layout_constraintStart_toEndOf="@id/lang1SP"
+		app:layout_constraintEnd_toStartOf="@id/lang2SP"
+		android:src="@android:drawable/ic_input_add"
+		android:contentDescription="@string/options_bt"/>
+	
+	<Spinner
+		android:id="@+id/lang2SP"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		app:layout_constraintTop_toBottomOf="@id/mainPB"
+		app:layout_constraintStart_toEndOf="@id/optionsIB"
+		app:layout_constraintEnd_toEndOf="parent"/>
+	
+	<androidx.constraintlayout.widget.Barrier
+		android:id="@+id/langsBR"
 		android:layout_width="0dp"
 		android:layout_height="0dp"
-		app:layout_constraintTop_toBottomOf="@id/editLangBT"
+		app:barrierDirection="bottom"
+		app:constraint_referenced_ids="lang1SP,optionsIB,lang2SP"/>
+	
+	<ImageButton
+		android:id="@+id/langsIB"
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		app:layout_constraintTop_toBottomOf="@id/langsBR"
+		app:layout_constraintBottom_toTopOf="@id/dictionaryIB"
 		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toStartOf="@id/trainingIB"
+		android:src="@drawable/icon"
+		android:contentDescription="@string/edit_langs_bt"/>
+	
+	<TextView
+		android:id="@+id/langsTV"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		app:layout_constraintBottom_toBottomOf="@id/langsIB"
+		app:layout_constraintStart_toStartOf="@id/langsIB"
+		app:layout_constraintEnd_toEndOf="@id/langsIB"
+		style="@style/TextAppearance.AppCompat.Headline"
+		android:textAlignment="center"
+		android:padding="10dp"
+		android:text="@string/edit_langs_bt"/>
+	
+	<ImageButton
+		android:id="@+id/trainingIB"
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		app:layout_constraintTop_toBottomOf="@id/langsBR"
+		app:layout_constraintBottom_toTopOf="@id/learnedCB"
+		app:layout_constraintStart_toEndOf="@id/langsIB"
 		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintBottom_toBottomOf="parent"/>
+		android:src="@drawable/icon"
+		android:contentDescription="@string/training_bt"/>
+	
+	<TextView
+		android:id="@+id/trainingTV"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		app:layout_constraintBottom_toBottomOf="@id/trainingIB"
+		app:layout_constraintStart_toStartOf="@id/trainingIB"
+		app:layout_constraintEnd_toEndOf="@id/trainingIB"
+		style="@style/TextAppearance.AppCompat.Headline"
+		android:textAlignment="center"
+		android:padding="10dp"
+		android:text="@string/training_bt"/>
+	
+	<CheckBox
+		android:id="@+id/learnedCB"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		app:layout_constraintTop_toBottomOf="@id/trainingIB"
+		app:layout_constraintBottom_toBottomOf="@id/langsIB"
+		app:layout_constraintStart_toStartOf="@id/trainingIB"
+		app:layout_constraintEnd_toEndOf="@id/trainingIB"
+		android:text="@string/with_learned_bt"/>
+	
+	<ImageButton
+		android:id="@+id/dictionaryIB"
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		app:layout_constraintTop_toBottomOf="@id/langsIB"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toStartOf="@id/themesIB"
+		android:src="@drawable/icon"
+		android:contentDescription="@string/dictionary_bt"/>
+	
+	<TextView
+		android:id="@+id/dictionaryTV"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		app:layout_constraintBottom_toBottomOf="@id/dictionaryIB"
+		app:layout_constraintStart_toStartOf="@id/dictionaryIB"
+		app:layout_constraintEnd_toEndOf="@id/dictionaryIB"
+		style="@style/TextAppearance.AppCompat.Headline"
+		android:textAlignment="center"
+		android:padding="10dp"
+		android:text="@string/dictionary_bt"/>
+	
+	<ImageButton
+		android:id="@+id/themesIB"
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		app:layout_constraintTop_toBottomOf="@id/learnedCB"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintStart_toEndOf="@id/dictionaryIB"
+		app:layout_constraintEnd_toEndOf="parent"
+		android:src="@drawable/icon"
+		android:contentDescription="@string/themes_bt"/>
+	
+	<TextView
+		android:id="@+id/themesTV"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		app:layout_constraintBottom_toBottomOf="@id/themesIB"
+		app:layout_constraintStart_toStartOf="@id/themesIB"
+		app:layout_constraintEnd_toEndOf="@id/themesIB"
+		style="@style/TextAppearance.AppCompat.Headline"
+		android:textAlignment="center"
+		android:padding="10dp"
+		android:text="@string/themes_bt"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

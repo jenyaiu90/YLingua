@@ -15,7 +15,7 @@ import ru.jenyaiu90.ylingua.entity.Language;
 import ru.jenyaiu90.ylingua.entity.Translation;
 import ru.jenyaiu90.ylingua.entity.Word;
 
-@androidx.room.Database(entities = {Language.class, Word.class, Translation.class}, version = 2)
+@androidx.room.Database(entities = { Language.class, Word.class, Translation.class }, version = 3)
 public abstract class Database extends RoomDatabase
 {
 	// Migrations
@@ -24,8 +24,28 @@ public abstract class Database extends RoomDatabase
 		@Override
 		public void migrate(@NonNull SupportSQLiteDatabase database)
 		{
-			database.execSQL("ALTER TABLE translations ADD COLUMN learned2 INTEGER NOT NULL DEFAULT 0");
+			database.execSQL("ALTER TABLE translations ADD COLUMN" +
+					"learned2 INTEGER NOT NULL DEFAULT 0");
 			database.execSQL("UPDATE translations SET learned2 = 0");
+		}
+	};
+	private static final Migration MIGRATION_2_3 = new Migration(2, 3)
+	{
+		@Override
+		public void migrate(@NonNull SupportSQLiteDatabase database)
+		{
+			database.execSQL("CREATE TABLE themes (" +
+					"id INTEGER PRIMARY KEY," +
+					"name TEXT NOT NULL," +
+					"description TEXT)");
+			database.execSQL("CREATE TABLE themes_translations (" +
+					"id INTEGER PRIMARY KEY," +
+					"theme INTEGER NOT NULL," +
+					"translation INTEGER NOT NULL," +
+					"FOREIGN KEY (theme) REFERENCES themes(id)" +
+						"MATCH SIMPLE ON UPDATE CASCADE ON DELETE CASCADE," +
+					"FOREIGN KEY (translation) REFERENCES translations(id)" +
+						"MATCH SIMPLE ON UPDATE CASCADE ON DELETE CASCADE)");
 		}
 	};
 
@@ -59,6 +79,7 @@ public abstract class Database extends RoomDatabase
 		}
 		return builder
 				.addMigrations(MIGRATION_1_2)
+				.addMigrations(MIGRATION_2_3)
 				.build();
 	}
 

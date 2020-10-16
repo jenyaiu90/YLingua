@@ -12,20 +12,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import ru.jenyaiu90.ylingua.R;
-import ru.jenyaiu90.ylingua.view.EditLangFragment;
 import ru.jenyaiu90.ylingua.database.Database;
 import ru.jenyaiu90.ylingua.entity.Language;
+import ru.jenyaiu90.ylingua.view.EditLanguagesActivity;
 
 public class LanguagesAdapter extends ArrayAdapter<Language>
 {
 	private ImageButton[] deleteViews;
-	private EditLangFragment fragment;
+	private EditLanguagesActivity activity;
 
-	public LanguagesAdapter(@NonNull EditLangFragment fragment, Language[] array)
+	public LanguagesAdapter(@NonNull EditLanguagesActivity activity, Language[] array)
 	{
-		super(fragment.getContext(), R.layout.adapter_languages, array);
+		super(activity, R.layout.adapter_languages, array);
 		deleteViews = new ImageButton[array.length];
-		this.fragment = fragment;
+		this.activity = activity;
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class LanguagesAdapter extends ArrayAdapter<Language>
 			public void onClick(final View v)
 			{
 				new AlertDialog.Builder(getContext())
-						.setMessage(R.string.lang_delete_sure)
+						.setMessage(R.string.lang_delete_sure_msg)
 						.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener()
 						{
 							@Override
@@ -76,12 +76,12 @@ public class LanguagesAdapter extends ArrayAdapter<Language>
 			public void run()
 			{
 				Database.get(getContext()).languages().delete(language);
-				fragment.getActivity().runOnUiThread(new Runnable()
+				activity.runOnUiThread(new Runnable()
 				{
 					@Override
 					public void run()
 					{
-						fragment.loadLanguages();
+						activity.loadLangs();
 					}
 				});
 			}

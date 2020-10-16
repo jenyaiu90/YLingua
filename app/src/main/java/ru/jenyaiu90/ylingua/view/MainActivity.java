@@ -1,38 +1,33 @@
 package ru.jenyaiu90.ylingua.view;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Pair;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.FrameLayout;
+import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
-import android.widget.RadioButton;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.Toast;
-
-import com.google.android.material.tabs.TabLayout;
 
 import java.util.List;
 
 import ru.jenyaiu90.ylingua.R;
-import ru.jenyaiu90.ylingua.adapter.MainFragmentPagerAdapter;
 import ru.jenyaiu90.ylingua.database.Database;
 import ru.jenyaiu90.ylingua.entity.Language;
 
 public class MainActivity extends AppCompatActivity
 {
-	private Button editLangBT;
-	private FrameLayout mainFL;
+	private ProgressBar mainPB;
+	private Spinner lang1SP, lang2SP;
+	private ImageButton optionsIB, langsIB, trainingIB, dictionaryIB, themesIB;
+	private CheckBox learnedCB;
 
-	private boolean editingLang;
+	private boolean needToBeReloaded;
+
+	private int easterCounter = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -40,87 +35,166 @@ public class MainActivity extends AppCompatActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		editLangBT = findViewById(R.id.editLangBT);
-		mainFL = findViewById(R.id.mainFL);
+		needToBeReloaded = false;
 
-		editingLang = false;
+		mainPB = findViewById(R.id.mainPB);
+		lang1SP = findViewById(R.id.lang1SP);
+		lang2SP = findViewById(R.id.lang2SP);
+		optionsIB = findViewById(R.id.optionsIB);
+		langsIB = findViewById(R.id.langsIB);
+		trainingIB = findViewById(R.id.trainingIB);
+		dictionaryIB = findViewById(R.id.dictionaryIB);
+		themesIB = findViewById(R.id.themesIB);
+		learnedCB = findViewById(R.id.learnedCB);
 
-		editLangBT.setOnClickListener(new View.OnClickListener()
+		setLangs();
+
+		mainPB.setOnClickListener(new View.OnClickListener()
 		{
 			@Override
 			public void onClick(View v)
 			{
-				if (editingLang)
+				if (easterCounter >= 16)
 				{
-					editLangBT.setText(R.string.edit_lang);
-					loadFragment(new MainFragment(), false);
+					Toast.makeText(MainActivity.this, "Мама, я тебя люблю!",
+							Toast.LENGTH_LONG).show();
 				}
 				else
 				{
-					editLangBT.setText(R.string.back);
-					loadFragment(new EditLangFragment(), false);
+					easterCounter++;
 				}
-				editingLang = !editingLang;
 			}
 		});
 
-		loadFragment(new MainFragment(), false);
+		optionsIB.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				Intent optionsI = new Intent(MainActivity.this, OptionsActivity.class);
+				startActivity(optionsI);
+			}
+		});
+
+		langsIB.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				needToBeReloaded = true;
+				Intent editLanguagesI = new Intent(MainActivity.this,
+						EditLanguagesActivity.class);
+				startActivity(editLanguagesI);
+			}
+		});
+
+		trainingIB.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				String  lang1 = lang1SP.getSelectedItem() == null ? "" :
+								lang1SP.getSelectedItem().toString(),
+						lang2 = lang2SP.getSelectedItem() == null ? "" :
+								lang2SP.getSelectedItem().toString();
+				if (lang1.isEmpty() || lang2.isEmpty() || lang1.equals(lang2))
+				{
+					Toast.makeText(MainActivity.this, R.string.select_lang_wrong_msg,
+							Toast.LENGTH_LONG).show();
+				}
+				else
+				{
+					Intent trainingI = new Intent(MainActivity.this,
+							TrainingActivity.class);
+					trainingI.putExtra(DictionaryActivity.LANG1,
+							lang1SP.getSelectedItem().toString());
+					trainingI.putExtra(DictionaryActivity.LANG2,
+							lang2SP.getSelectedItem().toString());
+					trainingI.putExtra(TrainingActivity.LEARNED,
+							learnedCB.isChecked());
+					startActivity(trainingI);
+				}
+			}
+		});
+
+		dictionaryIB.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				String  lang1 = lang1SP.getSelectedItem() == null ? "" :
+								lang1SP.getSelectedItem().toString(),
+						lang2 = lang2SP.getSelectedItem() == null ? "" :
+								lang2SP.getSelectedItem().toString();
+				if (lang1.isEmpty() || lang2.isEmpty() || lang1.equals(lang2))
+				{
+					Toast.makeText(MainActivity.this, R.string.select_lang_wrong_msg,
+							Toast.LENGTH_LONG).show();
+				}
+				else
+				{
+					Intent dictionaryI = new Intent(MainActivity.this,
+							DictionaryActivity.class);
+					dictionaryI.putExtra(DictionaryActivity.LANG1,
+							lang1SP.getSelectedItem().toString());
+					dictionaryI.putExtra(DictionaryActivity.LANG2,
+							lang2SP.getSelectedItem().toString());
+					startActivity(dictionaryI);
+				}
+			}
+		});
+
+		themesIB.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				Intent themesI = new Intent(MainActivity.this, ThemesActivity.class);
+				startActivity(themesI);
+			}
+		});
 	}
 
-	private void loadFragment(Fragment fragment, boolean addToStack)
+	private void setLangs()
 	{
-		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-		transaction.replace(R.id.mainFL, fragment);
-		if (addToStack)
+		mainPB.setVisibility(View.VISIBLE);
+		new Thread()
 		{
-			transaction.addToBackStack(null);
-		}
-		transaction.commit();
+			@Override
+			public void run()
+			{
+				List<Language> languages = Database.get(MainActivity.this).languages().getAll();
+				String[] langs = new String[languages.size()];
+				for (int i = 0; i < languages.size(); i++)
+				{
+					langs[i] = languages.get(i).getCode();
+				}
+				final ArrayAdapter<String> adapter =
+						new ArrayAdapter<>(MainActivity.this,
+								android.R.layout.simple_spinner_item, langs);
+				adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+				runOnUiThread(new Runnable()
+				{
+					@Override
+					public void run()
+					{
+						lang1SP.setAdapter(adapter);
+						lang2SP.setAdapter(adapter);
+						mainPB.setVisibility(View.INVISIBLE);
+					}
+				});
+			}
+		}.start();
 	}
-
-	/*public void start(boolean withLearned)
-	{
-		if (lang1 == null || lang2 == null || lang1.equals(lang2))
-		{
-			Toast.makeText(MainActivity.this, R.string.chose_lang,
-					Toast.LENGTH_LONG).show();
-		}
-		else
-		{
-			training(withLearned);
-		}
-	}*/
-
-	/*public void training(boolean withLearned)
-	{
-		loadFragment(new TrainingFragment(
-				MainActivity.this, new Pair<>(lang1, lang2), withLearned),
-				false);
-	}*/
-
-	/*private void openDictionary()
-	{
-		if (lang1 == null || lang2 == null || lang1.equals(lang2))
-		{
-			Toast.makeText(MainActivity.this, R.string.chose_lang, Toast.LENGTH_LONG).show();
-			loadFragment(new StartFragment(MainActivity.this), false);
-		}
-		else
-		{
-			loadFragment(new DictionaryFragment(lang1, lang2), false);
-		}
-	}*/
 
 	@Override
-	public void onBackPressed()
+	public void onResume()
 	{
-		if (editingLang)
+		super.onResume();
+		if (needToBeReloaded)
 		{
-			editLangBT.callOnClick();
-		}
-		else
-		{
-			super.onBackPressed();
+			setLangs();
+			needToBeReloaded = false;
 		}
 	}
 }

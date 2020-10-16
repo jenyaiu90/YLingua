@@ -17,6 +17,16 @@
 				<category android:name="android.intent.category.LAUNCHER"/>
 			</intent-filter>
 		</activity>
+		<activity android:name=".view.EditLanguagesActivity"
+			android:configChanges="orientation|screenSize"/>
+		<activity android:name=".view.DictionaryActivity"
+			android:configChanges="orientation|screenSize"/>
+		<activity android:name=".view.TrainingActivity"
+			android:configChanges="orientation|screenSize"/>
+		<activity android:name=".view.OptionsActivity"
+			android:configChanges="orientation|screenSize"/>
+		<activity android:name=".view.ThemesActivity"
+			android:configChanges="orientation|screenSize"/>
 	</application>
 
 </manifest>
