@@ -108,13 +108,14 @@
 	<ImageButton
 		android:id="@+id/okIB"
 		android:layout_width="0dp"
-		android:layout_height="wrap_content"
+		android:layout_height="0dp"
+		app:layout_constraintDimensionRatio="1:1"
 		app:layout_constraintTop_toTopOf="@id/translationET"
 		app:layout_constraintBottom_toBottomOf="@id/translationET"
 		app:layout_constraintStart_toEndOf="@id/endGL"
 		app:layout_constraintEnd_toEndOf="parent"
-		android:src="@android:drawable/ic_menu_send"
-		android:tint="@android:color/holo_blue_dark"
+		android:src="@drawable/ic_ok"
+		android:scaleType="fitCenter"
 		android:contentDescription="@string/answer_h"/>
 	
 	<CheckBox

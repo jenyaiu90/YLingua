@@ -27,8 +27,6 @@ public class MainActivity extends AppCompatActivity
 
 	private boolean needToBeReloaded;
 
-	private int easterCounter = 0;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -48,23 +46,6 @@ public class MainActivity extends AppCompatActivity
 		learnedCB = findViewById(R.id.learnedCB);
 
 		setLangs();
-
-		mainPB.setOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View v)
-			{
-				if (easterCounter >= 16)
-				{
-					Toast.makeText(MainActivity.this, "Мама, я тебя люблю!",
-							Toast.LENGTH_LONG).show();
-				}
-				else
-				{
-					easterCounter++;
-				}
-			}
-		});
 
 		optionsIB.setOnClickListener(new View.OnClickListener()
 		{

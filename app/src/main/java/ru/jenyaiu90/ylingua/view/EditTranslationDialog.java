@@ -262,7 +262,7 @@ public class EditTranslationDialog extends DialogFragment
 			public void run()
 			{
 				Database.get(getContext()).translations().delete(translation);
-				getActivity().runOnUiThread(new Runnable()
+				activity.runOnUiThread(new Runnable()
 				{
 					@Override
 					public void run()

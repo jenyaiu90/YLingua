@@ -26,12 +26,15 @@
 	
 	<ImageButton
 		android:id="@+id/optionsIB"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
+		android:layout_width="50sp"
+		android:layout_height="0dp"
+		app:layout_constraintDimensionRatio="1:1"
 		app:layout_constraintTop_toBottomOf="@id/mainPB"
+		app:layout_constraintBottom_toTopOf="@id/langsBR"
 		app:layout_constraintStart_toEndOf="@id/lang1SP"
 		app:layout_constraintEnd_toStartOf="@id/lang2SP"
-		android:src="@android:drawable/ic_input_add"
+		android:src="@drawable/ic_options"
+		android:scaleType="fitCenter"
 		android:contentDescription="@string/options_bt"/>
 	
 	<Spinner
@@ -57,7 +60,8 @@
 		app:layout_constraintBottom_toTopOf="@id/dictionaryIB"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintEnd_toStartOf="@id/trainingIB"
-		android:src="@drawable/icon"
+		android:src="@drawable/ic_edit_languages"
+		android:scaleType="fitCenter"
 		android:contentDescription="@string/edit_langs_bt"/>
 	
 	<TextView
@@ -80,7 +84,8 @@
 		app:layout_constraintBottom_toTopOf="@id/learnedCB"
 		app:layout_constraintStart_toEndOf="@id/langsIB"
 		app:layout_constraintEnd_toEndOf="parent"
-		android:src="@drawable/icon"
+		android:src="@drawable/ic_training"
+		android:scaleType="fitCenter"
 		android:contentDescription="@string/training_bt"/>
 	
 	<TextView
@@ -113,7 +118,8 @@
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintEnd_toStartOf="@id/themesIB"
-		android:src="@drawable/icon"
+		android:src="@drawable/ic_dictionary"
+		android:scaleType="fitCenter"
 		android:contentDescription="@string/dictionary_bt"/>
 	
 	<TextView
@@ -136,7 +142,8 @@
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintStart_toEndOf="@id/dictionaryIB"
 		app:layout_constraintEnd_toEndOf="parent"
-		android:src="@drawable/icon"
+		android:src="@drawable/ic_themes"
+		android:scaleType="fitCenter"
 		android:contentDescription="@string/themes_bt"/>
 	
 	<TextView
