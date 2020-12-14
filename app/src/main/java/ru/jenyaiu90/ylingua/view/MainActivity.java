@@ -56,6 +56,16 @@ public class MainActivity extends AppCompatActivity
 				startActivity(optionsI);
 			}
 		});
+		optionsIB.setOnLongClickListener(new View.OnLongClickListener()
+		{
+			@Override
+			public boolean onLongClick(View v)
+			{
+				Toast.makeText(MainActivity.this, R.string.options_i, Toast.LENGTH_LONG).
+						show();
+				return true;
+			}
+		});
 
 		langsIB.setOnClickListener(new View.OnClickListener()
 		{
@@ -66,6 +76,16 @@ public class MainActivity extends AppCompatActivity
 				Intent editLanguagesI = new Intent(MainActivity.this,
 						EditLanguagesActivity.class);
 				startActivity(editLanguagesI);
+			}
+		});
+		langsIB.setOnLongClickListener(new View.OnLongClickListener()
+		{
+			@Override
+			public boolean onLongClick(View v)
+			{
+				Toast.makeText(MainActivity.this, R.string.edit_langs_i, Toast.LENGTH_LONG).
+						show();
+				return true;
 			}
 		});
 
@@ -97,6 +117,26 @@ public class MainActivity extends AppCompatActivity
 				}
 			}
 		});
+		trainingIB.setOnLongClickListener(new View.OnLongClickListener()
+		{
+			@Override
+			public boolean onLongClick(View v)
+			{
+				Toast.makeText(MainActivity.this, R.string.training_i, Toast.LENGTH_LONG).
+						show();
+				return true;
+			}
+		});
+		learnedCB.setOnLongClickListener(new View.OnLongClickListener()
+		{
+			@Override
+			public boolean onLongClick(View v)
+			{
+				Toast.makeText(MainActivity.this, R.string.with_learned_i, Toast.LENGTH_LONG).
+						show();
+				return true;
+			}
+		});
 
 		dictionaryIB.setOnClickListener(new View.OnClickListener()
 		{
@@ -124,6 +164,16 @@ public class MainActivity extends AppCompatActivity
 				}
 			}
 		});
+		dictionaryIB.setOnLongClickListener(new View.OnLongClickListener()
+		{
+			@Override
+			public boolean onLongClick(View v)
+			{
+				Toast.makeText(MainActivity.this, R.string.dictionary_i, Toast.LENGTH_LONG).
+						show();
+				return true;
+			}
+		});
 
 		themesIB.setOnClickListener(new View.OnClickListener()
 		{
@@ -132,6 +182,16 @@ public class MainActivity extends AppCompatActivity
 			{
 				Intent themesI = new Intent(MainActivity.this, ThemesActivity.class);
 				startActivity(themesI);
+			}
+		});
+		themesIB.setOnLongClickListener(new View.OnLongClickListener()
+		{
+			@Override
+			public boolean onLongClick(View v)
+			{
+				Toast.makeText(MainActivity.this, R.string.themes_i, Toast.LENGTH_LONG).
+						show();
+				return true;
 			}
 		});
 	}

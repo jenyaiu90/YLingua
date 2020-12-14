@@ -48,39 +48,11 @@
 	<string name="translate_h">Введите перевод</string>
 	<string name="answer_h">Ответ</string>
 	
-	<!--
-	<string name="yes">Да</string>
-	<string name="no">Нет</string>
-	<string name="back">Назад</string>
-	<string name="delete">Удалить</string>
-	<string name="add">Добавить</string>
-	<string name="save">Сохранить</string>
-	<string name="cancel">Отмена</string>
-	
-	<string name="edit_lang">Изменить языки</string>
-	<string name="start">Начать тренировку</string>
-	<string name="training">Тренировка</string>
-	<string name="dictionary">Словарь</string>
-	<string name="add_word">Добавить слово</string>
-	<string name="add_lang">Добавить язык</string>
-	<string name="edit_translation">Изменить перевод</string>
-	<string name="answer">Ответить</string>
-	<string name="next">Далее</string>
-	<string name="set_learned">Отметить выученным</string>
-	<string name="with_learned">Повторять выученные слова</string>
-	
-	<string name="lang_code">RU</string>
-	<string name="lang_name">Русский</string>
-	<string name="first_word">Слово</string>
-	<string name="second_word">Перевод</string>
-	<string name="translate">Перевод</string>
-	
-	<string name="chose_lang">Вы должны выбрать два разных языка.</string>
-	<string name="enter_words">Вы должны ввести слово и его перевод.</string>
-	<string name="lang_delete_sure">Вы уверены, что хотите удалить этот язык? Это приведёт к удалению всех слов на этом языке из словаря.</string>
-	<string name="translation_delete_sure">Вы уверены, что хотите удалить это?</string>
-	<string name="land_not_added">Язык не был добавлен.</string>
-	<string name="no_words">Нет слов для тренировки. Перейдите в словарь и добавьте их.</string>
-	<string name="error">Ошибка.</string>
-	-->
+	<!-- Help -->
+	<string name="options_i">Настройки</string>
+	<string name="edit_langs_i">Здесь вы можете добавить или удалить язык</string>
+	<string name="training_i">Давайте изучим слова из словаря</string>
+	<string name="with_learned_i">Вы хотите повторить уже выученные слова?</string>
+	<string name="dictionary_i">Список слов, которые вы будете учить</string>
+	<string name="themes_i">Эта возможность пока недоступна</string>
 </resources>
