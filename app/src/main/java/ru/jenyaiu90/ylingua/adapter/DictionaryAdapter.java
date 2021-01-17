@@ -11,7 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import ru.jenyaiu90.ylingua.R;
-import ru.jenyaiu90.ylingua.view.DictionaryFragment;
+import ru.jenyaiu90.ylingua.view.DictionaryActivity;
 import ru.jenyaiu90.ylingua.database.Database;
 import ru.jenyaiu90.ylingua.entity.Translation;
 import ru.jenyaiu90.ylingua.view.EditTranslationDialog;
@@ -21,17 +21,17 @@ public class DictionaryAdapter extends ArrayAdapter<Translation>
 	private View[] views;
 	private CheckBox[] learned1CBs, learned2CBs;
 	@NonNull
-	private DictionaryFragment fragment;
+	private DictionaryActivity activity;
 	private Pair<String, String> lang;
 
-	public DictionaryAdapter(@NonNull DictionaryFragment fragment, Translation[] array,
+	public DictionaryAdapter(@NonNull DictionaryActivity activity, Translation[] array,
 							 @NonNull Pair<String, String> lang)
 	{
-		super(fragment.getContext(), R.layout.adapter_dictionary, array);
+		super(activity, R.layout.adapter_dictionary, array);
 		views = new View[array.length];
 		learned1CBs = new CheckBox[array.length];
 		learned2CBs = new CheckBox[array.length];
-		this.fragment = fragment;
+		this.activity = activity;
 		this.lang = lang;
 	}
 
@@ -58,13 +58,13 @@ public class DictionaryAdapter extends ArrayAdapter<Translation>
 						.getWord1()).getWord();
 				final String second = Database.get(getContext()).words().getById(getItem(position)
 						.getWord2()).getWord();
-				fragment.getActivity().runOnUiThread(new Runnable()
+				activity.runOnUiThread(new Runnable()
 				{
 					@Override
 					public void run()
 					{
-						((TextView)views[position].findViewById(R.id.firstTV)).setText(first);
-						((TextView)views[position].findViewById(R.id.secondTV)).setText(second);
+						((TextView)views[position].findViewById(R.id.word1TV)).setText(first);
+						((TextView)views[position].findViewById(R.id.word2TV)).setText(second);
 					}
 				});
 			}
@@ -97,8 +97,8 @@ public class DictionaryAdapter extends ArrayAdapter<Translation>
 				if (position < views.length)
 				{
 					EditTranslationDialog dialog =
-							new EditTranslationDialog(getItem(position), lang, fragment);
-					dialog.show(fragment.getFragmentManager(), null);
+							new EditTranslationDialog(getItem(position), lang, activity);
+					dialog.show(activity.getSupportFragmentManager(), null);
 				}
 			}
 		});
@@ -109,7 +109,7 @@ public class DictionaryAdapter extends ArrayAdapter<Translation>
 	private void switchLearned(final int position, final int n)
 	{
 		final CheckBox[] arr = n == 1 ? learned1CBs : learned2CBs;
-		fragment.loadingPB.setVisibility(View.VISIBLE);
+		activity.dictionaryPB.setVisibility(View.VISIBLE);
 		new Thread()
 		{
 			@Override
@@ -128,12 +128,12 @@ public class DictionaryAdapter extends ArrayAdapter<Translation>
 													   lang, !getItem(position).getLearned2());
 					}
 
-					fragment.getActivity().runOnUiThread(new Runnable()
+					activity.runOnUiThread(new Runnable()
 					{
 						@Override
 						public void run()
 						{
-							fragment.loadWords();
+							activity.loadWords();
 						}
 					});
 				}
